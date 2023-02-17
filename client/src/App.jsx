@@ -1,16 +1,14 @@
-import './App.css'
-import GameInfo from '../components/req'
-
-
+import MyPlanner from '../components/Planner'
 
 function App() {
 
   return (
-    <div>
-      <h3>
-        <GameInfo />
-      </h3>
-    </div>
+    <>
+
+      <MyPlanner />
+
+
+    </>
   )
 }
 

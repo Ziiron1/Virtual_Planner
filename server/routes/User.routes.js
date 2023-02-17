@@ -7,10 +7,10 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-router.post('/users', userController.createUser); /* Criar um usuário */
-router.get('/users', userController.findAllUsers);/* Achar Todos */
-router.get('/users/:id', userController.findUserById);/* Achar pelo id */
-router.patch('/users/:id', userController.updateUser);/* Update no usuário pelo id */
-router.delete('/users/:id', userController.deleteUser);/* Deletar o usuário pelo id */
+router.post('/', userController.createUser); /* Criar um usuário */
+router.get('/', userController.findAllUsers);/* Achar Todos */
+router.get('/:id', userController.findUserById);/* Achar pelo id */
+router.patch('/:id', userController.updateUser);/* Update no usuário pelo id */
+router.delete('/:id', userController.deleteUser);/* Deletar o usuário pelo id */
 
 module.exports = router;
