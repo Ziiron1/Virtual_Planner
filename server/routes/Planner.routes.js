@@ -12,5 +12,6 @@ router.get('/', userController.findAllPlanners);/* Achar Todos */
 router.get('/:id', userController.findPlannerById);/* Achar pelo id */
 router.patch('/:id', userController.UpdatePlanner);/* Update no usuário pelo id */
 router.delete('/:id', userController.DeletePlanner);/* Deletar o usuário pelo id */
+router.get('/user', userController.FindUserPlanner)
 
 module.exports = router;

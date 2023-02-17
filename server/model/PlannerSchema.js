@@ -1,35 +1,40 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const plannerSchema = new mongoose.Schema({
   id: {
     type: String,
-    required: true
+    required: true,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
   rotulo: {
     type: String,
-    required: true
+    required: true,
   },
   diaHoraAdicionado: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   conteudo: {
     type: String,
-    required: true
+    required: true,
   },
   comentarios: {
     type: [String],
-    default: []
+    default: [],
   },
   dataInicio: {
     type: Date,
-    required: true
+    required: true,
   },
   dataFim: {
     type: Date,
-    required: true
-  }
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('Planner', plannerSchema);
+module.exports = mongoose.model("planners", plannerSchema);

@@ -1,15 +1,15 @@
-import MyPlanner from '../components/Planner'
+import MyPlanner from "../components/Planner";
+import Register from "../components/Register";
+import Login from "../components/Login";
 
 function App() {
-
   return (
     <>
-
-      <MyPlanner />
-
-
+      <Login />
+      {/* <Register /> */}
+      {/* <MyPlanner /> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

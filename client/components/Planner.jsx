@@ -16,18 +16,27 @@ function MyCalendar() {
   function handleSelectSlot(slotInfo) {
     const title = window.prompt("Enter a title for your event");
     if (title) {
+      const newEvent = {
+        start: slotInfo.start,
+        end: slotInfo.end,
+        title,
+      };
+
       axios
-        .get("http://localhost:4000/planner")
+        .post("http://localhost:4000/planner", newEvent)
         .then((response) => {
-          console.log(response.data);
-          setEvents([
-            ...events,
-            {
-              start: slotInfo.start,
-              end: slotInfo.end,
-              title,
-            },
-          ]);
+          const userId = // id do usuário logado
+            axios
+              .get(`http://localhost:4000/users/${userId}`)
+              .then((response) => {
+                const user = response.data;
+                user.events.push(response.data);
+                axios
+                  .put(`http://localhost:4000/users/${userId}`, user)
+                  .then(() => {
+                    setEvents([...events, response.data]);
+                  });
+              });
         })
         .catch((error) => console.error(error));
     }
