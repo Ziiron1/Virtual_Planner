@@ -13,7 +13,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<DashBoard />} />
-        <Route path="/planner" element={isAuthenticated ? <MyPlanner /> : <Navigate to="/login" />} />
+        <Route path="/calendar" element={isAuthenticated ? <MyPlanner /> : <Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

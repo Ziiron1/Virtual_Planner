@@ -25,7 +25,7 @@ function LoginPage() {
       localStorage.setItem("Username", name);
 
       setTimeout(() => {
-        navigate('/planner');
+        navigate('/calendar');
       }, 300);
 
     } catch (error) {

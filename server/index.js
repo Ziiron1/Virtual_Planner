@@ -6,7 +6,7 @@ const path = require("path");
 const User = require("./routes/User.routes");
 const Planner = require("./routes/Planner.routes");
 const LoginRoute = require("./function/login");
-const authMiddleware = require("./middleware/token")
+// const authMiddleware = require("./middleware/token")
 const RegisterRoute = require("./function/register");
 
 require("dotenv").config();
@@ -52,8 +52,8 @@ app.get("/react", (req, res) => {
 app.use("/login", LoginRoute);
 app.post('/register', RegisterRoute.createUser)
 
-app.use("/users", authMiddleware, User);
-app.use("/planner", authMiddleware, Planner);
+app.use("/users",/*  authMiddleware, */ User);
+app.use("/planner",/*  authMiddleware, */ Planner);
 
 // Iniciando o servidor
 app.listen(PORT, () => {

@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField } from "@mui/material";
 import api from "../config/axiosInstance";
-import WelcomeMessage from './User'
 
 const localizer = momentLocalizer(moment);
 
 function MyCalendar() {
   const [events, setEvents] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
 
   useEffect(() => {
     const userId = localStorage.getItem("id_user");
@@ -23,12 +26,46 @@ function MyCalendar() {
   }, []);
 
   function handleSelectEvent(event) {
-    window.alert(event.title);
+    setSelectedEvent(event);
+    setEditTitle(event.rotulo);
+    setOpenDialog(true);
+  }
+
+  function handleDialogClose() {
+    setOpenDialog(false);
+  }
+
+  function handleEditEvent() {
+    const updatedEvent = { ...selectedEvent, rotulo: editTitle };
+
+    api
+      .patch(`/planner/${selectedEvent.id}`, updatedEvent)
+      .then((response) => {
+        const updatedEvents = events.map((event) => {
+          if (event.id === selectedEvent.id) {
+            return updatedEvent;
+          }
+          return event;
+        });
+        setEvents(updatedEvents);
+        setSelectedEvent(updatedEvent);
+        setOpenDialog(false);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function handleTitleChange(event) {
+    setEditTitle(event.target.value);
   }
 
   function handleSelectSlot(slotInfo) {
-    const title = window.prompt("Coloque um titulo para o seu evento");
+    const title = window.prompt("Enter a title for your event");
     if (title) {
+      const newEvent = {
+        start: slotInfo.start,
+        end: slotInfo.end,
+        rotulo: title,
+      };
 
       const userId = localStorage.getItem("id_user");
       if (userId) {
@@ -41,25 +78,29 @@ function MyCalendar() {
             rotulo: title,
           })
           .then((response) => {
-            const planner = response.data;
-            const newEvent = {
-              id: planner.id,
-              title: planner.rotulo,
-              start: new Date(planner.dataInicio),
-              end: new Date(planner.dataFim)
-            };
-            setEvents([...events, newEvent]);
-            window.location.assign('/planner');
+            setEvents([...events, response.data]);
           })
           .catch((error) => console.error(error));
       }
     }
   }
 
+  function handleDeleteEvent() {
+    api
+      .delete(`/planner/${selectedEvent._id}`)
+      .then(() => {
+        const updatedEvents = events.filter((event) => event.id !== selectedEvent.id);
+        setEvents(updatedEvents);
+        setSelectedEvent(null);
+        setOpenDialog(false);
+        console.log("Deletado com sucesso!!")
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
     <div>
-      <WelcomeMessage />
-      {/* <Calendar
+      <Calendar
         localizer={localizer}
         events={events}
         startAccessor="dataInicio"
@@ -68,27 +109,28 @@ function MyCalendar() {
         selectable
         onSelectEvent={handleSelectEvent}
         onSelectSlot={handleSelectSlot}
-      /> */}
-      <Calendar
-        startAccessor="dataInicio"
-        endAccessor="dataFim"
-        views={["day", "agenda", "week", "month"]}
-        selectable
-        localizer={localizer}
-        events={events}
-        style={{ height: 500 }}
-        onSelectEvent={(event) => alert(event.rotulo)}
-        onSelectSlot={handleSelectSlot}
-        step={10}
-        showMultiDayTimes
-        resizable={true}
-        onEventDrop={console.log}
-        onEventResize={console.log}
-        onDragStart={console.log}
-        onDropFromOutside={console.log}
-        draggableAccessor={() => true}
-        resizableAccessor={() => true}
       />
+      <Dialog open={openDialog} onClose={handleDialogClose}>
+        <DialogTitle>Edit Event</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Edit the title of the event:</DialogContentText>
+          <TextField label="Title" variant
+            ="outlined" value={editTitle} onChange={handleTitleChange} />
+        </DialogContent>
+        <div style={{ display: "flex", justifyContent: "space-between", margin: "10px" }}>
+          <Button variant="contained" color="secondary" onClick={handleDeleteEvent}>
+            Delete
+          </Button>
+          <div>
+            <Button variant="contained" onClick={handleDialogClose}>
+              Cancel
+            </Button>
+            <Button variant="contained" color="primary" onClick={handleEditEvent}>
+              Save
+            </Button>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }

@@ -70,7 +70,7 @@ exports.findAllPlanners = (req, res) => {
 exports.findPlannerById = (req, res) => {
   const id = req.params.id;
 
-  Planner.findOne({ _id: id })
+  Planner.findOne({ id: id })
     .then((result) => {
       res.status(200).json({
         message: "Planner found",
@@ -88,7 +88,7 @@ exports.UpdatePlanner = (req, res) => {
   const id = req.params.id;
   const updateOps = req.body;
 
-  Planner.update({ _id: id }, { $set: updateOps })
+  Planner.update({ id: id }, { $set: updateOps })
     .then((result) => {
       res.status(200).json({
         message: "Planner updated",
@@ -103,6 +103,7 @@ exports.UpdatePlanner = (req, res) => {
 };
 
 exports.DeletePlanner = (req, res) => {
+
   Planner.findByIdAndDelete(req.params.id)
     .then((user) => res.json({ msg: "Planner excluído com sucesso" }))
     .catch((err) =>
