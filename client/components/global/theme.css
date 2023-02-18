@@ -1,0 +1,74 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  transition: background-color 0.5s ease-out;
+}
+
+.light {
+  background-color: #a5beba;
+  color: #1d1d1d;
+}
+
+.dark {
+  background-color: #1d1d1d;
+  color: #a5beba;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #555;
+  text-shadow: 1px 1px #b5b4b4;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.logout,
+.theme-toggle {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+}
+
+.logout:hover,
+.theme-toggle:hover {
+  background-color: #f5f5f5;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle {
+  background: linear-gradient(to right, #333, #555);
+  color: #f5f5f5;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+  background: linear-gradient(to right, #555, #777);
+  color: #f5f5f5;
+}
+
+.header.light {
+  background: linear-gradient(to bottom, #f5f5f5, #eee);
+}
+
+.header.dark {
+  background: linear-gradient(to bottom, #333, #111);
+}

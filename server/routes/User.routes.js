@@ -5,9 +5,12 @@ const userController = require('../controller/User.Controller');
 const app = express();
 const cors = require("cors");
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true // permite enviar cookies
+}));
 
-router.post('/', userController.createUser); /* Criar um usuário */
 router.get('/', userController.findAllUsers);/* Achar Todos */
 router.get('/:id', userController.findUserById);/* Achar pelo id */
 router.patch('/:id', userController.updateUser);/* Update no usuário pelo id */

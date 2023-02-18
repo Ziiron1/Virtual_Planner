@@ -2,10 +2,10 @@ const Planner = require("../model/PlannerSchema");
 const { v4: uuidv4 } = require("uuid");
 
 exports.CreatePlanner = (req, res) => {
-  const userID = req.user.id;
+  const userID = req.body.userID;
   const planner = new Planner({
     id: uuidv4(),
-    user: userID,
+    user_Id: userID,
     rotulo: req.body.rotulo,
     diaHoraAdicionado: req.body.diaHoraAdicionado,
     conteudo: req.body.conteudo,
@@ -30,16 +30,25 @@ exports.CreatePlanner = (req, res) => {
     });
 };
 
-exports.FindUserPlanner = (req, res) => {
+exports.findUserPlanners = (req, res) => {
   try {
-    const userID = req.user.id;
-    const planners = Planner.find({ user: userID });
-    res.json(planners);
+    const userId = req.params.user_Id;
+    Planner.find({ user_Id: userId })
+      .then((planners) => {
+        res.status(200).json({
+          message: "Planners found for user",
+          planners: planners,
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({
+          message: "Error finding planners for user",
+          error: error,
+        });
+      });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "Erro ao buscar planejamentos do usuário" });
+    res.status(500).json({ message: "Error finding user planners" });
   }
 };
 

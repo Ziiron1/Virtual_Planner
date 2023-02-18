@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function CreateUserForm() {
   const [name, setName] = useState("");
@@ -11,6 +12,7 @@ function CreateUserForm() {
   const [cidade, setCidade] = useState("");
   const [pais, setPais] = useState("");
   const [cep, setCep] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,8 +31,12 @@ function CreateUserForm() {
     };
 
     try {
-      const response = await axios.post("http://localhost:4000/users", newUser);
+      const response = await axios.post("http://localhost:4000/register", newUser);
       console.log(response.data);
+
+      setTimeout(() => {
+        navigate('/login');
+      }, 300);
     } catch (err) {
       console.error(err);
     }

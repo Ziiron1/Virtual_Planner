@@ -5,9 +5,8 @@ const plannerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+  user_Id: {
+    type: String,
     required: true,
   },
   rotulo: {
@@ -21,7 +20,7 @@ const plannerSchema = new mongoose.Schema({
   },
   conteudo: {
     type: String,
-    required: true,
+    required: false,
   },
   comentarios: {
     type: [String],

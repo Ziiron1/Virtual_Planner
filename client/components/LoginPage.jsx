@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -14,11 +16,20 @@ function LoginPage() {
         password: password,
       });
 
-      console.log(response.data);
-      // Fazer algo com o token retornado pelo servidor, como armazená-lo em localStorage
+      const id_user = response.data.id;
+      const token = response.data.token;
+      const name = response.data.name;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("id_user", id_user);
+      localStorage.setItem("Username", name);
+
+      setTimeout(() => {
+        navigate('/planner');
+      }, 300);
+
     } catch (error) {
       console.error(error);
-      // Fazer algo para lidar com o erro, como mostrar uma mensagem de erro na tela
     }
   };
 

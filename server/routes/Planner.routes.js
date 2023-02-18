@@ -5,13 +5,17 @@ const userController = require('../controller/Planner.Controller');
 const app = express();
 const cors = require("cors");
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true // permite enviar cookies
+}));
 
-router.post('/', userController.CreatePlanner); /* Criar um usuário */
+router.post('/', userController.CreatePlanner); /* Criar um Planner */
 router.get('/', userController.findAllPlanners);/* Achar Todos */
 router.get('/:id', userController.findPlannerById);/* Achar pelo id */
-router.patch('/:id', userController.UpdatePlanner);/* Update no usuário pelo id */
-router.delete('/:id', userController.DeletePlanner);/* Deletar o usuário pelo id */
-router.get('/user', userController.FindUserPlanner)
+router.patch('/:id', userController.UpdatePlanner);/* Update no Planner pelo id */
+router.delete('/:id', userController.DeletePlanner);/* Deletar o Planner pelo id */
+router.get('/user/:user_Id', userController.findUserPlanners)
 
 module.exports = router;

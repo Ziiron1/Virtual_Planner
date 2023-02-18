@@ -1,6 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
@@ -21,7 +21,7 @@ const User = require("../model/UserSchema");
 const router = express.Router();
 
 // Rota de login
-router.post("/login", async (req, res) => {
+router.post("/", async (req, res) => {
   // Verificando se as informações necessárias foram fornecidas
   if (!req.body || !req.body.email || !req.body.password) {
     return res.status(400).json({ message: "Email e senha são obrigatórios" });
@@ -44,13 +44,14 @@ router.post("/login", async (req, res) => {
   }
 
   // Gerando um token com as informações do usuário e uma chave secreta
-  // const token = jwt.sign(
-  //   { id: user._id, email: user.email },
-  //   process.env.SECRET_KEY
-  // );
+  const token = jwt.sign(
+    { id: user.id, email: user.email, name: user.name },
+    process.env.SECRET_KEY,
+    { expiresIn: "1h" } // o token expira em 1 hora
+  );
 
   // Retornando o token para o usuário
-  return res.json('Acesso Permitido!!'/* { token } */);
+  return res.json({ token, id: user.id, name: user.name });
 });
 
 module.exports = router;

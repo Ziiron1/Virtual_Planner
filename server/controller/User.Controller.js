@@ -1,8 +1,8 @@
 const User = require('../model/UserSchema');
 const bcrypt = require("bcryptjs");
-const { uuid } = require("uuidv4");
+// const { uuid } = require("uuidv4");
 
-exports.createUser = (req, res) => {
+/* exports.createUser = (req, res) => {
     const user = new User({
         id: uuid(),
         name: req.body.name,
@@ -31,10 +31,30 @@ exports.createUser = (req, res) => {
                 error: error,
             });
         });
-};
+}; */
 
 exports.findAllUsers = (req, res) => {
-    User.find()
+    User.aggregate([
+        {
+            $lookup: {
+                from: "planners",
+                localField: "id",
+                foreignField: "user_Id",
+                as: "planners",
+            },
+        },
+        {
+            $project: {
+                id: 1,
+                name: 1,
+                email: 1,
+                password: 1,
+                isAdmin: 1,
+                endereco: 1,
+                planners: { conteudo: 1, rotulo: 1, diaHoraAdicionado: 1, comentarios: 1 },
+            },
+        },
+    ])
         .then((result) => {
             res.status(200).json({
                 message: "User list",
@@ -49,13 +69,34 @@ exports.findAllUsers = (req, res) => {
 };
 
 exports.findUserById = (req, res) => {
-    const id = req.params.id;
-
-    User.findOne({ _id: id })
+    User.aggregate([
+        {
+            $lookup: {
+                from: "planners",
+                localField: "id",
+                foreignField: "user_Id",
+                as: "planners",
+            },
+        },
+        {
+            $project: {
+                name: 1,
+                email: 1,
+                isAdmin: 1,
+                endereco: 1,
+                planners: { conteudo: 1, rotulo: 1, diaHoraAdicionado: 1, comentarios: 1 },
+            },
+        },
+    ])
         .then((result) => {
+            if (result.length === 0) {
+                return res.status(404).json({
+                    message: "User not found",
+                });
+            }
             res.status(200).json({
                 message: "User found",
-                user: result,
+                user: result[0],
             });
         })
         .catch((error) => {
@@ -64,6 +105,7 @@ exports.findUserById = (req, res) => {
             });
         });
 };
+
 
 exports.updateUser = (req, res) => {
     const id = req.params.id;
