@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Alert, AlertTitle } from '@mui/material';
 
 function CreateUserForm() {
   const [name, setName] = useState("");
@@ -13,6 +14,8 @@ function CreateUserForm() {
   const [pais, setPais] = useState("");
   const [cep, setCep] = useState("");
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(null);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,12 +37,24 @@ function CreateUserForm() {
       const response = await axios.post("http://localhost:4000/register", newUser);
       console.log(response.data);
 
+      setAlert({
+        title: "Sucesso",
+        message: "Cadastrado com sucesso!",
+        severity: "success",
+      });
+
       setTimeout(() => {
         navigate('/login');
-      }, 300);
+      }, 1500);
     } catch (err) {
       console.error(err);
+      setAlert({
+        title: "Error",
+        message: "Erro ao Cadastrar-se! Email já existente!",
+        severity: "error",
+      });
     }
+
 
     // Reset the form
     setName("");
@@ -55,6 +70,11 @@ function CreateUserForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      {alert && (
+        <Alert onClose={() => setAlert(null)} severity={alert.severity}>
+          <AlertTitle>{alert.title}</AlertTitle> {alert.message}
+        </Alert>
+      )}
       <div>
         <label htmlFor="name">Name:</label>
         <input

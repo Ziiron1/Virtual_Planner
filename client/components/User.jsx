@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 function WelcomeMessage() {
     const [username, setUsername] = useState("");
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem("Username");
+        const storedUsername = Cookies.get("Username");
         if (storedUsername) {
             setUsername(storedUsername);
         }

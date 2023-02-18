@@ -45,13 +45,13 @@ router.post("/", async (req, res) => {
 
   // Gerando um token com as informações do usuário e uma chave secreta
   const token = jwt.sign(
-    { id: user.id, email: user.email, name: user.name },
+    { id: user.id, email: user.email, name: user.name, Admin: user.isAdmin },
     process.env.SECRET_KEY,
     { expiresIn: "1h" } // o token expira em 1 hora
   );
 
   // Retornando o token para o usuário
-  return res.json({ token, id: user.id, name: user.name });
+  return res.json({ token, id: user.id, name: user.name, isAdmin: user.isAdmin });
 });
 
 module.exports = router;

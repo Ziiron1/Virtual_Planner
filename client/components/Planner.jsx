@@ -4,6 +4,8 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField } from "@mui/material";
 import api from "../config/axiosInstance";
+import Cookies from "js-cookie";
+import WelcomeUser from './User'
 
 const localizer = momentLocalizer(moment);
 
@@ -14,7 +16,7 @@ function MyCalendar() {
   const [editTitle, setEditTitle] = useState("");
 
   useEffect(() => {
-    const userId = localStorage.getItem("id_user");
+    const userId = Cookies.get("id_user");
     if (userId) {
       api
         .get(`http://localhost:4000/planner/user/${userId}`)
@@ -67,7 +69,7 @@ function MyCalendar() {
         rotulo: title,
       };
 
-      const userId = localStorage.getItem("id_user");
+      const userId = Cookies.get("id_user");
       if (userId) {
         api
           .post("/planner", {
@@ -79,6 +81,9 @@ function MyCalendar() {
           })
           .then((response) => {
             setEvents([...events, response.data]);
+            setTimeout(() => {
+              window.location.assign('/calendar');
+            }, 100)
           })
           .catch((error) => console.error(error));
       }
@@ -100,6 +105,7 @@ function MyCalendar() {
 
   return (
     <div>
+      <WelcomeUser />
       <Calendar
         localizer={localizer}
         events={events}

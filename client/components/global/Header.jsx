@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./theme.css"
+import Cookies from "js-cookie";
 
 const Header = () => {
-    const navigate = useNavigate();
     const [theme, setTheme] = useState("light");
 
     // Carrega o tema atual do localStorage ao montar o componente
@@ -20,28 +20,30 @@ const Header = () => {
     }
 
     function handleLogout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("id_user");
-        localStorage.removeItem("Username");
+        Cookies.remove("token");
+        Cookies.remove("id_user");
+        Cookies.remove("Username");
+        Cookies.remove("is_Admin");
 
         setTimeout(() => {
-            navigate("/login");
-        }, 500);
+            window.location.assign("/login")
+        }, 200);
     }
 
     const isLoggedIn =
-        localStorage.getItem("token") &&
-        localStorage.getItem("id_user") &&
-        localStorage.getItem("Username");
+        Cookies.get("token") &&
+        Cookies.get("id_user") &&
+        Cookies.get("Username") &&
+        Cookies.get("is_Admin");
 
     return (
         <header className={`header ${theme}`}>
             <div className="logo">
                 <Link to="/">
-                    <h1>My App</h1>
+                    <h2>Home</h2>
                 </Link>
                 <Link to="/calendar">
-                    <h1>Planner</h1>
+                    <h2>Planner App</h2>
                 </Link>
             </div>
             <div className="nav">
