@@ -51,7 +51,7 @@ exports.findAllUsers = (req, res) => {
                 password: 1,
                 isAdmin: 1,
                 endereco: 1,
-                planners: { conteudo: 1, rotulo: 1, diaHoraAdicionado: 1, comentarios: 1 },
+                planners: { conteudo: 1, title: 1, diaHoraAdicionado: 1, comentarios: 1 },
             },
         },
     ])
@@ -84,7 +84,7 @@ exports.findUserById = (req, res) => {
                 email: 1,
                 isAdmin: 1,
                 endereco: 1,
-                planners: { conteudo: 1, rotulo: 1, diaHoraAdicionado: 1, comentarios: 1 },
+                planners: { conteudo: 1, title: 1, diaHoraAdicionado: 1, comentarios: 1 },
             },
         },
     ])
@@ -115,7 +115,7 @@ exports.updateUser = (req, res) => {
         updateOps.password = bcrypt.hashSync(updateOps.password, 8);
     }
 
-    User.update({ _id: id }, { $set: updateOps })
+    User.updateOne({ _id: id }, { $set: updateOps })
         .then((result) => {
             res.status(200).json({
                 message: "User updated",

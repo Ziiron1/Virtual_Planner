@@ -9,7 +9,7 @@ const plannerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rotulo: {
+  title: {
     type: String,
     required: true,
   },

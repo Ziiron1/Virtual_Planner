@@ -6,7 +6,7 @@ exports.CreatePlanner = (req, res) => {
   const planner = new Planner({
     id: uuidv4(),
     user_Id: userID,
-    rotulo: req.body.rotulo,
+    title: req.body.title,
     diaHoraAdicionado: req.body.diaHoraAdicionado,
     conteudo: req.body.conteudo,
     comentarios: req.body.comentarios,

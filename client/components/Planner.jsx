@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField } from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Modal } from "@mui/material";
 import api from "../config/axiosInstance";
 import Cookies from "js-cookie";
-import WelcomeUser from './User'
+import WelcomeUser from './User';
+import DateTimePicker from 'react-datetime-picker';
 
 const localizer = momentLocalizer(moment);
 
@@ -14,6 +15,52 @@ function MyCalendar() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [editTitle, setEditTitle] = useState("");
+  const [open, setOpen] = useState(false);
+
+  function AddEventModal(props) {
+    const { open, onClose, onSubmit } = props;
+    const [title, setTitle] = useState("");
+    const [date, setDate] = useState(new Date());
+
+    const handleTitleChange = (event) => {
+      setTitle(event.target.value);
+    };
+
+    const handleDateChange = (date) => {
+      setDate(date);
+    };
+
+    const handleSubmit = () => {
+      onSubmit({
+        start: date,
+        end: date,
+        title: title,
+      });
+      onClose();
+    };
+
+    return (
+      <Modal open={open} onClose={onClose}>
+        <div style={{ backgroundColor: "white", padding: "1rem" }}>
+          <TextField
+            label="Title"
+            value={title}
+            onChange={handleTitleChange}
+            sx={{ marginBottom: "1rem" }}
+          />
+          <DateTimePicker
+            label="Date and Time"
+            value={date}
+            onChange={handleDateChange}
+            sx={{ marginBottom: "1rem" }}
+          />
+          <Button variant="contained" onClick={handleSubmit}>
+            Add Event
+          </Button>
+        </div>
+      </Modal>
+    );
+  }
 
   useEffect(() => {
     const userId = Cookies.get("id_user");
@@ -29,7 +76,7 @@ function MyCalendar() {
 
   function handleSelectEvent(event) {
     setSelectedEvent(event);
-    setEditTitle(event.rotulo);
+    setEditTitle(event.title);
     setOpenDialog(true);
   }
 
@@ -38,7 +85,7 @@ function MyCalendar() {
   }
 
   function handleEditEvent() {
-    const updatedEvent = { ...selectedEvent, rotulo: editTitle };
+    const updatedEvent = { ...selectedEvent, title: editTitle };
 
     api
       .patch(`/planner/${selectedEvent.id}`, updatedEvent)
@@ -66,7 +113,7 @@ function MyCalendar() {
       const newEvent = {
         start: slotInfo.start,
         end: slotInfo.end,
-        rotulo: title,
+        title: title,
       };
 
       const userId = Cookies.get("id_user");
@@ -77,7 +124,7 @@ function MyCalendar() {
             conteudo: "Conteudo",
             dataInicio: slotInfo.start,
             dataFim: slotInfo.end,
-            rotulo: title,
+            title: title,
           })
           .then((response) => {
             setEvents([...events, response.data]);
@@ -103,6 +150,27 @@ function MyCalendar() {
       .catch((error) => console.error(error));
   }
 
+  const [modalOpen, setModalOpen] = useState(false);
+  function handleAddEvent(eventData) {
+    const { title, start, end } = eventData;
+    const userId = Cookies.get("id_user");
+    if (userId) {
+      api.post("/planner", {
+        userID: userId,
+        conteudo: "Conteudo",
+        dataInicio: start,
+        dataFim: end,
+        title: title,
+      })
+        .then((response) => {
+          setEvents([...events, response.data]);
+          setModalOpen(false);
+        })
+        .catch((error) => console.error(error));
+    }
+  }
+
+
   return (
     <div>
       <WelcomeUser />
@@ -120,8 +188,7 @@ function MyCalendar() {
         <DialogTitle>Edit Event</DialogTitle>
         <DialogContent>
           <DialogContentText>Edit the title of the event:</DialogContentText>
-          <TextField label="Title" variant
-            ="outlined" value={editTitle} onChange={handleTitleChange} />
+          <TextField label="Title" variant="outlined" value={editTitle} onChange={handleTitleChange} />
         </DialogContent>
         <div style={{ display: "flex", justifyContent: "space-between", margin: "10px" }}>
           <Button variant="contained" color="secondary" onClick={handleDeleteEvent}>
@@ -134,6 +201,10 @@ function MyCalendar() {
             <Button variant="contained" color="primary" onClick={handleEditEvent}>
               Save
             </Button>
+            <Button variant="contained" onClick={() => setOpen(true)}>
+              Add Event
+            </Button>
+            <AddEventModal open={open} onClose={handleDialogClose} onSubmit={handleAddEvent} />
           </div>
         </div>
       </Dialog>
