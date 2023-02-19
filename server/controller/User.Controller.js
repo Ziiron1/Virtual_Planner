@@ -80,6 +80,7 @@ exports.findUserById = (req, res) => {
         },
         {
             $project: {
+                id: 1,
                 name: 1,
                 email: 1,
                 isAdmin: 1,
@@ -115,7 +116,7 @@ exports.updateUser = (req, res) => {
         updateOps.password = bcrypt.hashSync(updateOps.password, 8);
     }
 
-    User.updateOne({ _id: id }, { $set: updateOps })
+    User.updateOne({ id: id }, { $set: updateOps })
         .then((result) => {
             res.status(200).json({
                 message: "User updated",

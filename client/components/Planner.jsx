@@ -5,7 +5,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Modal } from "@mui/material";
 import api from "../config/axiosInstance";
 import Cookies from "js-cookie";
-import WelcomeUser from './User';
+import WelcomeUser from './User/User';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
@@ -216,19 +216,19 @@ function MyCalendar() {
   return (
     <div>
       <WelcomeUser />
-     <DragAndDropCalendar
-      localizer={localizer}
-      events={events}
-      startAccessor="start"
-      endAccessor="end"
-      style={{ height: 500 }}
-      selectable
-      onSelectEvent={handleSelectEvent}
-      onSelectSlot={handleSelectSlot}
-      onEventDrop={handleEventDrop}
-      resizable
-      onEventResize={handleEventResize}
-    />
+      <DragAndDropCalendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500 }}
+        selectable
+        onSelectEvent={handleSelectEvent}
+        onSelectSlot={handleSelectSlot}
+        onEventDrop={handleEventDrop}
+        resizable
+        onEventResize={handleEventResize}
+      />
       <Dialog open={openDialog} onClose={handleDialogClose}>
         <DialogTitle>Edit Event</DialogTitle>
         <DialogContent>
