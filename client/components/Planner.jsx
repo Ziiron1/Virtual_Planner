@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Modal } from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Modal } from "@mui/material";
 import api from "../config/axiosInstance";
 import Cookies from "js-cookie";
 import WelcomeUser from './User';
-import DateTimePicker from 'react-datetime-picker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+
+const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const localizer = momentLocalizer(moment);
 
@@ -122,8 +125,8 @@ function MyCalendar() {
           .post("/planner", {
             userID: userId,
             conteudo: "Conteudo",
-            dataInicio: slotInfo.start,
-            dataFim: slotInfo.end,
+            start: slotInfo.start,
+            end: slotInfo.end,
             title: title,
           })
           .then((response) => {
@@ -158,8 +161,8 @@ function MyCalendar() {
       api.post("/planner", {
         userID: userId,
         conteudo: "Conteudo",
-        dataInicio: start,
-        dataFim: end,
+        start: start,
+        end: end,
         title: title,
       })
         .then((response) => {
@@ -170,43 +173,86 @@ function MyCalendar() {
     }
   }
 
+  function handleEventDrop({ event, start, end, allDay }) {
+    const updatedEvent = { ...event, start, end, allDay };
+    const updatedEvents = events.map((e) => (e.id === updatedEvent.id ? updatedEvent : e));
+    setEvents(updatedEvents);
+
+    api
+      .patch(`/planner/${updatedEvent.id}`, updatedEvent)
+      .then((response) => {
+        //...
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function handleEventResize({ event, start, end }) {
+    const updatedEvent = { ...event, start, end };
+    const updatedEvents = events.map((e) => (e.id === updatedEvent.id ? updatedEvent : e));
+    setEvents(updatedEvents);
+
+    api
+      .patch(`/planner/${updatedEvent.id}`, updatedEvent)
+      .then((response) => {
+        //...
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function handleEventResize({ event, start, end }) {
+    const updatedEvent = { ...event, start, end };
+
+    api
+      .patch(`/planner/${updatedEvent.id}`, updatedEvent)
+      .then((response) => {
+        const updatedEvents = events.map((e) =>
+          e.id === updatedEvent.id ? updatedEvent : e
+        );
+        setEvents(updatedEvents);
+      })
+      .catch((error) => console.error(error));
+  }
 
   return (
     <div>
       <WelcomeUser />
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="dataInicio"
-        endAccessor="dataFim"
-        style={{ height: 500 }}
-        selectable
-        onSelectEvent={handleSelectEvent}
-        onSelectSlot={handleSelectSlot}
-      />
+     <DragAndDropCalendar
+      localizer={localizer}
+      events={events}
+      startAccessor="start"
+      endAccessor="end"
+      style={{ height: 500 }}
+      selectable
+      onSelectEvent={handleSelectEvent}
+      onSelectSlot={handleSelectSlot}
+      onEventDrop={handleEventDrop}
+      resizable
+      onEventResize={handleEventResize}
+    />
       <Dialog open={openDialog} onClose={handleDialogClose}>
         <DialogTitle>Edit Event</DialogTitle>
         <DialogContent>
-          <DialogContentText>Edit the title of the event:</DialogContentText>
-          <TextField label="Title" variant="outlined" value={editTitle} onChange={handleTitleChange} />
+          <DialogContentText>Preencha as informações do novo evento:</DialogContentText>
+          <TextField label="Titulo" variant="outlined" value={editTitle} onChange={handleTitleChange} fullWidth />
+          <TextField label="Data de início" type="datetime-local" InputLabelProps={{ shrink: true }} fullWidth />
+          <TextField label="Data de término" type="datetime-local" InputLabelProps={{ shrink: true }} fullWidth />
         </DialogContent>
-        <div style={{ display: "flex", justifyContent: "space-between", margin: "10px" }}>
-          <Button variant="contained" color="secondary" onClick={handleDeleteEvent}>
-            Delete
-          </Button>
-          <div>
-            <Button variant="contained" onClick={handleDialogClose}>
-              Cancel
+        <DialogActions>
+          <div style={{ display: "flex", justifyContent: "space-between", margin: "10px" }}>
+            <Button variant="contained" color="secondary" onClick={handleDeleteEvent}> {/* Realmente deleta. */}
+              Delete
             </Button>
-            <Button variant="contained" color="primary" onClick={handleEditEvent}>
-              Save
-            </Button>
-            <Button variant="contained" onClick={() => setOpen(true)}>
-              Add Event
-            </Button>
-            <AddEventModal open={open} onClose={handleDialogClose} onSubmit={handleAddEvent} />
+            <div>
+              <Button variant="contained" onClick={handleDialogClose}> {/* Fecha apenas */}
+                Cancel
+              </Button>
+              <Button variant="contained" color="primary" onClick={handleEditEvent}>
+                Save
+              </Button>
+              <AddEventModal open={open} onClose={handleDialogClose} onSubmit={handleAddEvent} />
+            </div>
           </div>
-        </div>
+        </DialogActions>
       </Dialog>
     </div>
   );

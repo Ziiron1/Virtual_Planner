@@ -26,11 +26,11 @@ const plannerSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
-  dataInicio: {
+  start: {
     type: Date,
     required: true,
   },
-  dataFim: {
+  end: {
     type: Date,
     required: true,
   },

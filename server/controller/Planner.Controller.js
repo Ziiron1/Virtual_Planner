@@ -10,8 +10,8 @@ exports.CreatePlanner = (req, res) => {
     diaHoraAdicionado: req.body.diaHoraAdicionado,
     conteudo: req.body.conteudo,
     comentarios: req.body.comentarios,
-    dataInicio: req.body.dataInicio,
-    dataFim: req.body.dataFim,
+    start: req.body.start,
+    end: req.body.end,
     events: req.body.events,
   });
 
@@ -88,7 +88,7 @@ exports.UpdatePlanner = (req, res) => {
   const id = req.params.id;
   const updateOps = req.body;
 
-  Planner.update({ id: id }, { $set: updateOps })
+  Planner.updateOne({ id: id }, { $set: updateOps })
     .then((result) => {
       res.status(200).json({
         message: "Planner updated",
