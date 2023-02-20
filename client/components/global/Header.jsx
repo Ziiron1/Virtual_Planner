@@ -52,6 +52,9 @@ const Header = () => {
                         Logout
                     </button>
                 )}
+                <Link to="/userpanel">
+                    <h4>UserPanel</h4>
+                </Link>
                 <button className="theme-toggle" onClick={toggleTheme}>
                     {theme === "light" ? "Dark" : "Light"} Theme
                 </button>

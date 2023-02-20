@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Grid, Paper, TextField, Typography, Button } from '@mui/material';
 import { makeStyles } from "@material-ui/core/styles";
 import Cookie from 'js-cookie';
+import Planner from '../Planner/PlannerDetailonPanel'
 import api from '../../config/axiosInstance'
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,10 +12,11 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
     },
 }));
-
+/*  /planner/user/:id */
 function UserEditPage() {
     const classes = useStyles();
     const [editMode, setEditMode] = useState(false);
+    const [user, setUser] = useState(null);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +26,18 @@ function UserEditPage() {
     const [pais, setPais] = useState('');
     const [cep, setCep] = useState('');
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const Userid = Cookie.get('id_user');
+        api.get(`/planner/user/${Userid}`)
+            .then((response) => {
+                setUser(response.data.planners);
+                // console.log(response.data.planners)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     useEffect(() => {
         const Userid = Cookie.get('id_user');
@@ -163,6 +177,12 @@ function UserEditPage() {
                             </Grid>
                         </form >
                     )}
+                    <div>
+                        <h1>Editar Usuário</h1>
+                        {user && user.map((planner) => (
+                            <Planner key={planner.id} planner={planner} />
+                        ))}
+                    </div>
                 </Paper>
             </Grid>
         </Grid >

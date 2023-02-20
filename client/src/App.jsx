@@ -1,14 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MyPlanner from "../components/Planner";
+import UserPanel from '../components/User/UserPanel'
 import Register from "../components/User/Register";
+import NotFound from "../components/NotFound"
 import Login from "../components/User/LoginPage";
 import DashBoard from '../components/DashBoard';
 import Header from '../components/global/Header'
+import Admin from "../components/Admin/Admin";
 import Cookies from "js-cookie";
 import Cookie from '../components/global/Cookie'
-import Admin from "../components/Admin/Admin";
-import UserPanel from '../components/User/UserPanel'
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
         <Route path="/admin" element={<AdminRoute />} />
         <Route path="/calendar" element={<AuthPlanner />} />
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/register" element={<RegisterRoute />} />
       </Routes>
 
