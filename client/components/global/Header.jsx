@@ -45,6 +45,9 @@ const Header = () => {
                 <Link to="/calendar">
                     <h2>Planner App</h2>
                 </Link>
+                <Link to="/admin">
+                    <h2>Admin</h2>
+                </Link>
             </div>
             <div className="nav">
                 {isLoggedIn && (
