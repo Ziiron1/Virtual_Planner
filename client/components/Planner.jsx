@@ -69,7 +69,7 @@ function MyCalendar() {
     const userId = Cookies.get("id_user");
     if (userId) {
       api
-        .get(`http://localhost:4000/planner/user/${userId}`)
+        .get(`https://plannervirtual.onrender.com/planner/user/${userId}`)
         .then((response) => {
           setEvents(response.data.planners);
         })

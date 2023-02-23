@@ -68,7 +68,7 @@ function Planner({ planner }) {
     }, []);
 
     const handleSave = useCallback(async () => {
-        const response = await api.patch(`http://localhost:4000/planner/${planner.id}`, {
+        const response = await api.patch(`https://plannervirtual.onrender.com/planner/${planner.id}`, {
             title,
             content,
             comentarios,

@@ -34,7 +34,7 @@ function CreateUserForm() {
     };
 
     try {
-      const response = await axios.post("http://localhost:4000/register", newUser);
+      const response = await axios.post("https://plannervirtual.onrender.com/register", newUser);
       console.log(response.data);
 
       setAlert({
