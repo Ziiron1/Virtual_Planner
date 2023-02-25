@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import { Alert, AlertTitle } from '@mui/material';
 import { TextField, Button } from "@mui/material";
-import styles from "./Login.Module.css";
+import styles from "./Login.module.css";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
