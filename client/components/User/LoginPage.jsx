@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import { Alert, AlertTitle } from '@mui/material';
 import { TextField, Button } from "@mui/material";
-import styles from "./Login.module.css";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -79,9 +78,9 @@ function LoginPage() {
 
   return (
     <div>
-      <h1 className={styles.LoginTitle}>Login</h1>
-      <div className={styles.container}>
-        <form onSubmit={handleSubmit} className={styles.form}>
+      <h1 className="text-center text-3xl font-bold">Login</h1>
+      <div className="flex flex-col items-center max-w-400px mx-auto p-5 ">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center w-full px-0 pb-7 pt-5 border-2 border-red-400 max-w-sm">
           {alert && (
             <Alert onClose={() => setAlert(null)} severity={alert.severity}>
               <AlertTitle>{alert.title}</AlertTitle> {alert.message}
@@ -95,6 +94,7 @@ function LoginPage() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             margin="normal"
+            className={` mb-20 ${error ? 'border-red-500' : ''}`}
             error={error} // Define a existência de erro
             helperText={error/*  && 'Email ou senha incorretos' */} // Define a mensagem de erro
             InputProps={{ style: { borderBottomColor: error ? 'red' : 'initial' } }} // Define a cor da borda de acordo com o erro
@@ -108,6 +108,7 @@ function LoginPage() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               margin="normal"
+              className={` mb-20 ${error ? 'border-red-500' : ''}`}
               error={error} // Define a existência de erro
               helperText={error/*  && 'Email ou senha incorretos' */} // Define a mensagem de erro
               InputProps={{ style: { borderBottomColor: error ? 'red' : 'initial' } }} // Define a cor da borda de acordo com o erro
