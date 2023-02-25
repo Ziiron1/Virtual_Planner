@@ -49,6 +49,12 @@ const Header = () => {
                         <h4 className="mr-4 text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">UserPanel</h4>
                     </Link>
                 )}
+                <Link to="/login" className="ml-4 text-gray-700 hover:text-gray-900">
+                    <h2 className="mr-4 text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">Login</h2>
+                </Link>
+                <Link to="/cadastro" className="ml-4 text-gray-700 hover:text-gray-900">
+                    <h2 className="mr-4 text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">Cadastre-se</h2>
+                </Link>
             </div>
         </header>
     );
