@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../config/axiosInstance';
-import TextField from '@mui/material/TextField';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Cookies from 'js-cookie';
 
 function Planners() {
@@ -14,7 +10,6 @@ function Planners() {
         api.get(`/planner/user/${Userid}`)
             .then((response) => {
                 setPlanners(response.data.planners);
-                // console.log(response.data.planners)
             })
             .catch((error) => {
                 console.log(error);
@@ -40,17 +35,18 @@ function ComentarioItem({ value, onChange }) {
 
 function Planner({ planner }) {
     const [title, setTitle] = useState(planner.title);
-    const [content, setContent] = useState(planner.conteudo);
+    const [conteudo, setConteudo] = useState(planner.conteudo);
     const [comentarios, setComentarios] = useState(planner.comentarios);
     const [start, setStart] = useState(new Date(planner.start));
     const [end, setEnd] = useState(new Date(planner.end));
+    const [date, setDate] = useState(new Date());
 
     const handleTitleChange = useCallback((event) => {
         setTitle(event.target.value);
     }, []);
 
     const handleContentChange = useCallback((event) => {
-        setContent(event.target.value);
+        setConteudo(event.target.value);
     }, []);
 
     const handleComentarioChange = useCallback((index, event) => {
@@ -59,71 +55,88 @@ function Planner({ planner }) {
         setComentarios(newComentarios);
     }, [comentarios]);
 
-    const handleStartChange = useCallback((event) => {
-        setStart(new Date(event));
-    }, []);
+    const handleStartChange = (value) => {
+        const newStart = new Date(`2023-03-03T${value}:00Z`);
+        setStart(newStart);
+    };
 
-    const handleEndChange = useCallback((event) => {
-        setEnd(new Date(event));
-    }, []);
+    const handleEndChange = (value) => {
+        const newEnd = new Date(`2023-03-03T${value}:00Z`);
+        setEnd(newEnd);
+    };
+
+
 
     const handleSave = useCallback(async () => {
-        const response = await api.patch(`https://plannervirtual.onrender.com/planner/${planner.id}`, {
+        const response = await api.patch(`/planner/${planner.id}`, {
             title,
-            content,
+            conteudo,
             comentarios,
             end,
             start,
         });
 
         const data = await response;
-        console.log(data.data);
-    }, [title, content, comentarios, end, start]);
+    }, [title, conteudo, comentarios, end, start]);
 
     return (
-        <div>
-            <h2>{planner.title}</h2> {/* Titulo */}
-            <p>{planner.content}</p> {/* Conteudo */}
-            <button onClick={() => handleSave()}>Salvar</button> {/* Botao para cada um, salvar */}
+        <div className="border-2 border-gray-400 p-4 my-4">
+            <h2 className="text-lg font-bold mb-2">{planner.title}</h2>
 
-            <input type="text" value={title} onChange={handleTitleChange} /> {/* Input do titulo */}
 
-            <textarea value={content} onChange={handleContentChange} /> {/* Text Area para o comentario  */}
-            {comentarios.map((comentario, index) => (
-                <ComentarioItem
-                    key={index}
-                    value={comentario}
-                    onChange={(event) => handleComentarioChange(index, event)}
+            <div className="space-y-2">
+                <label className="block text-gray-700 font-bold mb-2" htmlFor='title'>Título:</label>
+                <input
+                    type="text"
+                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={title}
+                    id="title"
+                    onChange={handleTitleChange}
                 />
-            ))}
-
-            <LocalizationProvider dateAdapter={AdapterDayjs}> {/* Horario mais digital para visual */}
-                <div>
-                    <TextField
-                        label="Title"
-                        value={title}
-                        onChange={handleTitleChange}
-                        sx={{ marginBottom: "1rem" }}
-                    />
-                    <TimePicker
-                        label="Start"
-                        value={start}
-                        onChange={handleStartChange}
-                        renderInput={(params) => <TextField {...params} />}
-                        sx={{ marginBottom: "1rem" }}
-                    />
-                    <TimePicker
-                        label="End"
-                        value={end}
-                        onChange={handleEndChange}
-                        renderInput={(params) => <TextField {...params} />}
-                        sx={{ marginBottom: "1rem" }}
+                <div className="border border-gray-300 rounded mb-2 p-2">
+                    <label htmlFor="content" className="block text-gray-700 font-bold mb-2">Conteúdo:</label>
+                    <textarea
+                        id="content"
+                        className="w-full"
+                        value={conteudo}
+                        onChange={handleContentChange}
                     />
                 </div>
-            </LocalizationProvider>
+
+                <div className="border border-gray-300 rounded mb-2 p-2">
+                    <label htmlFor="comentarios" className="block text-gray-700 font-bold mb-2">Comentários:</label>
+                    {comentarios.map((comentario, index) => (
+                        <ComentarioItem
+                            key={index}
+                            value={comentario}
+                            onChange={(event) => handleComentarioChange(index, event)}
+                        />
+                    ))}
+                </div>
+                <label className="block text-gray-700 font-bold mb-2">Início:</label>
+                <input
+                    type="time"
+                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={start && start.toISOString ? start.toISOString().slice(11, 16) : ''}
+                    onChange={(event) => handleStartChange(event.target.value)}
+                />
+                <label className="block text-gray-700 font-bold mb-2">Fim:</label>
+                <input
+                    type="time"
+                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={end.toISOString().slice(11, 16)}
+                    onChange={(event) => handleEndChange(event.target.value)}
+                />
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleSave}
+                >
+                    Salvar
+                </button>
+            </div>
+
         </div>
     );
 }
-
 
 export default Planners;

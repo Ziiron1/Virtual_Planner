@@ -1,24 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import "./theme.css"
 import Cookies from "js-cookie";
 
 const Header = () => {
-    const [theme, setTheme] = useState("light");
-
-    // Carrega o tema atual do localStorage ao montar o componente
-    useEffect(() => {
-        const storedTheme = localStorage.getItem("theme");
-        if (storedTheme) setTheme(storedTheme);
-    }, []);
-
-    function toggleTheme() {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-        document.body.classList.toggle("dark");
-    }
-
     function handleLogout() {
         Cookies.remove("token");
         Cookies.remove("id_user");
@@ -26,7 +10,7 @@ const Header = () => {
         Cookies.remove("is_Admin");
 
         setTimeout(() => {
-            window.location.assign("/login")
+            window.location.assign("/login");
         }, 200);
     }
 
@@ -37,30 +21,34 @@ const Header = () => {
         Cookies.get("is_Admin");
 
     return (
-        <header className={`header ${theme}`}>
-            <div className="logo">
+        <header className="flex justify-between items-center py-4 px-6">
+            <div className="flex items-center">
                 <Link to="/">
-                    <h2>Home</h2>
+                    <img alt="Logo" className="h-8 mr-4" src="/path/to/logo.png" />
                 </Link>
-                <Link to="/calendar">
-                    <h2>Planner App</h2>
-                </Link>
-                <Link to="/admin">
-                    <h2>Admin</h2>
-                </Link>
+                <div className="flex items-center">
+                    <Link to="/calendar" className="ml-4 text-gray-700 hover:text-gray-900">
+                        <h2 className="mr-4 text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">Planner App</h2>
+                    </Link>
+                    <Link to="/admin" className="ml-4 text-gray-700 hover:text-gray-900">
+                        <h2 className="mr-4 text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">Admin</h2>
+                    </Link>
+                </div>
             </div>
-            <div className="nav">
+            <div className="flex items-center">
                 {isLoggedIn && (
-                    <button className="logout" onClick={handleLogout}>
+                    <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-3"
+                        onClick={handleLogout}
+                    >
                         Logout
                     </button>
                 )}
-                <Link to="/userpanel">
-                    <h4>UserPanel</h4>
-                </Link>
-                <button className="theme-toggle" onClick={toggleTheme}>
-                    {theme === "light" ? "Dark" : "Light"} Theme
-                </button>
+                {isLoggedIn && (
+                    <Link to="/userpanel">
+                        <h4 className="mr-4 text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">UserPanel</h4>
+                    </Link>
+                )}
             </div>
         </header>
     );

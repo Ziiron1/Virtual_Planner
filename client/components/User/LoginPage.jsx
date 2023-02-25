@@ -64,7 +64,7 @@ function LoginPage() {
       setPassword("");
 
       setTimeout(() => {
-       setError(false);
+        setError(false);
       }, 3000);
     }
   };
@@ -78,7 +78,7 @@ function LoginPage() {
   }
 
   return (
-    <div >
+    <div>
       <h1 className={styles.LoginTitle}>Login</h1>
       <div className={styles.container}>
         <form onSubmit={handleSubmit} className={styles.form}>

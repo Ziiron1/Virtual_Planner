@@ -12,10 +12,12 @@ function WelcomeMessage() {
     }, []);
 
     return (
-        <div>
-            <div style={{ padding: "30px 0px 30px 10px", width: "400px" }}>
-                {username && <p style={{ fontWeight: "bold", fontSize: "18px", borderBottom: "1px #252525 solid" }}>Bem-vindo ao seu planner, {username}!</p>}
-            </div>
+        <div className="bg-gray-200 p-4 rounded-md w-80">
+            {username && (
+                <p className="font-bold text-lg border-b border-gray-300 pb-2">
+                    Bem-vindo ao seu planner, {username}!
+                </p>
+            )}
         </div>
     );
 }

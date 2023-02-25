@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Modal } from "@mui/material";
+import { Dialog } from "@mui/material";
 import api from "../config/axiosInstance";
 import Cookies from "js-cookie";
+import Modal from 'react-modal';
 import WelcomeUser from './User/User';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+// import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import Datepicker from 'flowbite-datepicker/Datepicker';
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
@@ -19,6 +21,8 @@ function MyCalendar() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [open, setOpen] = useState(false);
+  const [selectedStart, setSelectedStart] = useState(null);
+  const [selectedEnd, setSelectedEnd] = useState(null);
 
   function AddEventModal(props) {
     const { open, onClose, onSubmit } = props;
@@ -45,21 +49,25 @@ function MyCalendar() {
     return (
       <Modal open={open} onClose={onClose}>
         <div style={{ backgroundColor: "white", padding: "1rem" }}>
-          <TextField
-            label="Title"
+          <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
             value={title}
             onChange={handleTitleChange}
-            sx={{ marginBottom: "1rem" }}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <DateTimePicker
+          <Datepicker
             label="Date and Time"
             value={date}
             onChange={handleDateChange}
             sx={{ marginBottom: "1rem" }}
           />
-          <Button variant="contained" onClick={handleSubmit}>
+          <button variant="contained" onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Add Event
-          </Button>
+          </button>
         </div>
       </Modal>
     );
@@ -69,7 +77,7 @@ function MyCalendar() {
     const userId = Cookies.get("id_user");
     if (userId) {
       api
-        .get(`https://plannervirtual.onrender.com/planner/user/${userId}`)
+        .get(`/planner/user/${userId}`)
         .then((response) => {
           setEvents(response.data.planners);
         })
@@ -80,6 +88,8 @@ function MyCalendar() {
   function handleSelectEvent(event) {
     setSelectedEvent(event);
     setEditTitle(event.title);
+    setSelectedStart(event.start);
+    setSelectedEnd(event.end);
     setOpenDialog(true);
   }
 
@@ -88,7 +98,12 @@ function MyCalendar() {
   }
 
   function handleEditEvent() {
-    const updatedEvent = { ...selectedEvent, title: editTitle };
+    const updatedEvent = {
+      ...selectedEvent,
+      title: editTitle,
+      start: selectedStart,
+      end: selectedEnd
+    };
 
     api
       .patch(`/planner/${selectedEvent.id}`, updatedEvent)
@@ -188,19 +203,6 @@ function MyCalendar() {
 
   function handleEventResize({ event, start, end }) {
     const updatedEvent = { ...event, start, end };
-    const updatedEvents = events.map((e) => (e.id === updatedEvent.id ? updatedEvent : e));
-    setEvents(updatedEvents);
-
-    api
-      .patch(`/planner/${updatedEvent.id}`, updatedEvent)
-      .then((response) => {
-        //...
-      })
-      .catch((error) => console.error(error));
-  }
-
-  function handleEventResize({ event, start, end }) {
-    const updatedEvent = { ...event, start, end };
 
     api
       .patch(`/planner/${updatedEvent.id}`, updatedEvent)
@@ -230,29 +232,46 @@ function MyCalendar() {
         onEventResize={handleEventResize}
       />
       <Dialog open={openDialog} onClose={handleDialogClose}>
-        <DialogTitle>Edit Event</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Preencha as informações do novo evento:</DialogContentText>
-          <TextField label="Titulo" variant="outlined" value={editTitle} onChange={handleTitleChange} fullWidth />
-          <TextField label="Data de início" type="datetime-local" InputLabelProps={{ shrink: true }} fullWidth />
-          <TextField label="Data de término" type="datetime-local" InputLabelProps={{ shrink: true }} fullWidth />
-        </DialogContent>
-        <DialogActions>
-          <div style={{ display: "flex", justifyContent: "space-between", margin: "10px" }}>
-            <Button variant="contained" color="secondary" onClick={handleDeleteEvent}> {/* Realmente deleta. */}
-              Delete
-            </Button>
-            <div>
-              <Button variant="contained" onClick={handleDialogClose}> {/* Fecha apenas */}
-                Cancel
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleEditEvent}>
-                Save
-              </Button>
-              <AddEventModal open={open} onClose={handleDialogClose} onSubmit={handleAddEvent} />
-            </div>
+        <h2 id="modal-title" className="text-xl font-medium mb-2 p-2 flex">Edite o Evento</h2>
+        <div className="py-4 px-6">
+          <h2 className="text-xl font-medium mb-2">Preencha as informações do evento:</h2>
+          <label className="block font-medium mb-1">Titulo</label>
+          <input className="border border-gray-400 p-2 mb-4 rounded w-full" type="text" value={editTitle} onChange={handleTitleChange} />
+
+          <label className="block font-medium mb-1">Data de início</label>
+          <input className="border border-gray-400 p-2 mb-4 rounded w-full" type="datetime-local" />
+
+          <label className="block font-medium mb-1">Data de término</label>
+          <input className="border border-gray-400 p-2 mb-4 rounded w-full" type="datetime-local" />
+        </div>
+
+        <div className="flex justify-between p-4">
+          <button
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+            onClick={handleDeleteEvent}
+          >
+            Deletar
+          </button>
+
+          <div className="space-x-2">
+            <button
+              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+              onClick={handleDialogClose}
+            >
+              Cancelar
+            </button>
+
+            <button
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={handleEditEvent}
+            >
+              Salvar
+            </button>
+
+            <AddEventModal open={open} onClose={handleDialogClose} onSubmit={handleAddEvent} />
           </div>
-        </DialogActions>
+        </div>
+
       </Dialog>
     </div>
   );

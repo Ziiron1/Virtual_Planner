@@ -80,9 +80,8 @@ function Admin() {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await api.get('https://plannervirtual.onrender.com/admin');
+            const response = await api.get('/admin');
             setItems(response.data.result);
-            console.log(response.data.result);
         }
         fetchData();
     }, []);
@@ -93,14 +92,14 @@ function Admin() {
     };
 
     const handleDelete = async (id) => {
-        await api.delete(`https://plannervirtual.onrender.com/admin/${id}`);
+        await api.delete(`/admin/${id}`);
         setItems((prevItems) => prevItems.filter((item) => item.id !== id));
         window.location.assign("/admin")
     };
 
     const handleCreate = async () => {
-        await api.post('https://plannervirtual.onrender.com/admin', newItem);
-        const response = await api.get('https://plannervirtual.onrender.com/admin');
+        await api.post('/admin', newItem);
+        const response = await api.get('/admin');
         setItems(response.data.result);
         setModalIsOpen(false);
         setNewItem({ title: '', description: '', image: '' });

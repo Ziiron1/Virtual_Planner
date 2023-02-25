@@ -69,94 +69,104 @@ function CreateUserForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {alert && (
-        <Alert onClose={() => setAlert(null)} severity={alert.severity}>
-          <AlertTitle>{alert.title}</AlertTitle> {alert.message}
-        </Alert>
-      )}
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="rua">Rua:</label>
-        <input
-          type="text"
-          id="rua"
-          value={rua}
-          onChange={(event) => setRua(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="bairro">Bairro:</label>
-        <input
-          type="text"
-          id="bairro"
-          value={bairro}
-          onChange={(event) => setBairro(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="cidade">Cidade:</label>
-        <input
-          type="text"
-          id="cidade"
-          value={cidade}
-          onChange={(event) => setCidade(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="pais">País:</label>
-        <input
-          type="text"
-          id="pais"
-          value={pais}
-          onChange={(event) => setPais(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="cep">CEP:</label>
-        <input
-          type="number"
-          id="cep"
-          value={cep}
-          onChange={(event) => setCep(event.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Create User</button>
-    </form>
+    <div className="ml-96 mt-7">
+
+      <h1 className="font-bold from-stone-600 text-4xl mx-auto">Cadastre-se</h1>
+      <form onSubmit={handleSubmit} className="w-full p-4 mx-auto">
+        {alert && (
+          <Alert onClose={() => setAlert(null)} severity={alert.severity}>
+            <AlertTitle>{alert.title}</AlertTitle> {alert.message}
+          </Alert>
+        )}
+        <div className=" p-4">
+          <label htmlFor="name" className="block mb-2">Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <label htmlFor="email" className="block mb-2">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <label htmlFor="password" className="block mb-2">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <label htmlFor="rua" className="block mb-2">Rua:</label>
+          <input
+            type="text"
+            id="rua"
+            value={rua}
+            onChange={(event) => setRua(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <label htmlFor="bairro" className="block mb-2">Bairro:</label>
+          <input
+            type="text"
+            id="bairro"
+            value={bairro}
+            onChange={(event) => setBairro(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <label htmlFor="cidade" className="block mb-2">Cidade:</label>
+          <input
+            type="text"
+            id="cidade"
+            value={cidade}
+            onChange={(event) => setCidade(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <label htmlFor="pais" className="block mb-2">País:</label>
+          <input
+            type="text"
+            id="pais"
+            value={pais}
+            onChange={(event) => setPais(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <label htmlFor="cep" className="block mb-2">CEP:</label>
+          <input
+            type="text"
+            id="cep"
+            value={cep}
+            onChange={(event) => setCep(event.target.value)}
+            className="w-2/4 py-2 px-4 rounded border border-gray-300 mb-4"
+            required
+          />
+          <br />
+          <small className="mb-8">Apenas os números</small>
+          <br />
+          <br />
+        </div>
+
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Criar Usuário
+        </button>
+        <small style={{ marginTop: '4px', marginBottom: '4px' }}> <br /> <br />Já tem uma conta? Faça o <a href="/login" className="bg-slate-100 p-1 border-b-2 border-x-pink-700 rounded-md">Login</a></small>
+        <br />
+        <br />
+
+      </form>
+    </div>
+
   );
 }
 
