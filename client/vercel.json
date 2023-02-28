@@ -1,0 +1,10 @@
+{
+  "routes": [
+    { "src": "/userpanel", "dest": "./components/User/UserPanel.jsx" },
+    { "src": "/admin", "dest": "./components/Admin/Admin.jsx" },
+    { "src": "/calendar", "dest": "./components/Planner.jsx" },
+    { "src": "/login", "dest": "./components/User/LoginPage.jsx" },
+    { "src": "/.*", "dest": "./components/NotFound.jsx" },
+    { "src": "/register", "dest": "./components/User/Register.jsx" }
+  ]
+}
