@@ -1,8 +1,10 @@
 const Admin = require("../model/AdminSchema")
+const { v4: uuidv4 } = require("uuid");
 
 // Create
 exports.createAdmin = (req, res) => {
     const admin = new Admin({
+        IDAdmin: uuidv4(),
         title: req.body.title,
         description: req.body.description,
         image: req.body.image
@@ -27,7 +29,7 @@ exports.createAdmin = (req, res) => {
 exports.findAdminById = (req, res) => {
     const id = req.params.id;
 
-    Admin.findOne({ _id: id })
+    Admin.findOne({ IDAdmin: id })
         .then((result) => {
             res.status(200).json({
                 message: 'Admin encontrado',
@@ -61,7 +63,7 @@ exports.updateAdmin = (req, res) => {
     const id = req.params.id;
     const updateOps = req.body;
 
-    Admin.updateOne({ _id: id }, { $set: updateOps })
+    Admin.updateOne({ IDAdmin: id }, { $set: updateOps })
         .then((result) => {
             res.status(200).json({
                 message: 'Admin atualizado',
@@ -79,7 +81,7 @@ exports.updateAdmin = (req, res) => {
 exports.deleteAdmin = (req, res) => {
     const id = req.params.id;
 
-    Admin.deleteOne({ id: id })
+    Admin.deleteOne({ IDAdmin: id })
         .then((result) => {
             res.status(200).json({
                 message: 'Admin excluído',

@@ -1,8 +1,8 @@
 const User = require('../model/UserSchema');
 const bcrypt = require("bcryptjs");
-// const { uuid } = require("uuidv4");
+const { uuid } = require("uuidv4");
 
-/* exports.createUser = (req, res) => {
+exports.createUser = (req, res) => {
     const user = new User({
         id: uuid(),
         name: req.body.name,
@@ -31,7 +31,7 @@ const bcrypt = require("bcryptjs");
                 error: error,
             });
         });
-}; */
+};
 
 exports.findAllUsers = (req, res) => {
     User.aggregate([

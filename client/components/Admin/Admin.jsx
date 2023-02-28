@@ -10,13 +10,13 @@ const BUTTON_TEXT_WHITE = 'text-white';
 const BUTTON_FONT_BOLD = 'font-bold';
 const BUTTON_PADDING = 'py px-1';
 
-function TableItem({ _id, title, image, createdAt
-    , onDelete, onUpdate }) {
+function TableItem({ IDAdmin, title, image, description, createdAt, onDelete, onUpdate }) {
     return (
-        <tr key={_id}>
-            <td className="border px-4 py-2">{_id}</td>
+        <tr key={IDAdmin}>
+            <td className="border px-4 py-2">{IDAdmin}</td>
             <td className="border px-4 py-2">{title}</td>
             <td className="border px-4 py-2">{image}</td>
+            <td className="border px-4 py-2">{description}</td>
             <td className="border px-4 py-2">{createdAt}</td>
             <td className="border px-2 py-2">
 
@@ -52,7 +52,7 @@ function TableItem({ _id, title, image, createdAt
     );
 }
 
-function Table({ items, handleDelete }) {
+function Table({ items, handleDelete, handleUpdate }) {
     return (
         <table className="w-full">
             <thead>
@@ -60,13 +60,18 @@ function Table({ items, handleDelete }) {
                     <th className="px-4 py-2">ID</th>
                     <th className="px-4 py-2">Titulo</th>
                     <th className="px-4 py-2">Imagem</th>
+                    <th className="px-4 py-2">Descrição</th>
                     <th className="px-4 py-2">Criado em</th>
                     <th className="px-4 py-2">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                {items.map((item, index) => (
-                    <TableItem key={index} {...item} onDelete={() => handleDelete(item._id)} />
+                {items.map((item) => (
+                    <TableItem
+                        key={item.IDAdmin}
+                        {...item}
+                        onDelete={() => handleDelete(item.IDAdmin)}
+                        onUpdate={() => handleUpdate(item)} />
                 ))}
             </tbody>
         </table>
@@ -82,6 +87,7 @@ function Admin() {
         async function fetchData() {
             const response = await api.get('/admin');
             setItems(response.data.result);
+            console.log(response.data.result)
         }
         fetchData();
     }, []);
@@ -94,7 +100,11 @@ function Admin() {
     const handleDelete = async (id) => {
         await api.delete(`/admin/${id}`);
         setItems((prevItems) => prevItems.filter((item) => item.id !== id));
-        window.location.assign("/admin")
+    };
+
+    const handleUpdate = async (item) => {
+        await api.patch(`/admin/${item.IDAdmin}`, item);
+        setItems((prevItems) => prevItems.map((prevItem) => prevItem.IDAdmin === item.IDAdmin ? item : prevItem));
     };
 
     const handleCreate = async () => {
@@ -109,7 +119,7 @@ function Admin() {
         <div className="container mx-auto p-4">
             <h1 className="text-4xl mb-4">Painel Admin</h1>
             <div className={`${CARD_SHADOW} ${CARD_BORDER_RADIUS} p-4`}>
-                <Table items={items} handleDelete={handleDelete} />
+                <Table items={items} handleDelete={handleDelete} handleUpdate={handleUpdate} />
                 <button className="fixed right-4 bottom-4 w-10 h-10 rounded-full bg-red-500 hover:bg-red-700 shadow-md text-white flex justify-center items-center"
                     onClick={() => setModalIsOpen(true)}>
                     +
@@ -117,13 +127,13 @@ function Admin() {
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={() => setModalIsOpen(false)}
-                    contentLabel="Add New Item"
+                    contentLabel="Adicionar novo item"
                     className="bg-white rounded-md p-4 shadow-md animate-fade-in-down"
                     overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center animate-fade-in">
-                    <h2 className="text-2xl font-bold mb-4">Adicione um novo item</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-gray-800">Adicione um novo item</h2>
                     <form>
                         <div className="mb-4">
-                            <label className="block font-bold mb-2" htmlFor="title">
+                            <label className="block font-bold mb-2 text-gray-700" htmlFor="title">
                                 Titulo:
                             </label>
                             <input
@@ -132,11 +142,11 @@ function Admin() {
                                 name="title"
                                 value={newItem.title}
                                 onChange={handleNewInputChange}
-                                className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                                className="block w-full p-2 border bg-gray-200 rounded-md focus:outline-none text-slate-600 focus:ring focus:border-blue-300"
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block font-bold mb-2" htmlFor="description">
+                            <label className="block font-bold mb-2 text-gray-700" htmlFor="description">
                                 Descrição:
                             </label>
                             <input
@@ -145,11 +155,11 @@ function Admin() {
                                 name="description"
                                 value={newItem.description}
                                 onChange={handleNewInputChange}
-                                className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                                className="block w-full p-2 border rounded-md bg-gray-200 focus:outline-none text-slate-600 focus:ring focus:border-blue-300"
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block font-bold mb-2" htmlFor="image">
+                            <label className="block font-bold mb-2 text-gray-700" htmlFor="image">
                                 Imagem:
                             </label>
                             <input
@@ -158,7 +168,7 @@ function Admin() {
                                 name="image"
                                 value={newItem.image}
                                 onChange={handleNewInputChange}
-                                className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                                className="block w-full p-2 border rounded-md bg-gray-200 focus:outline-none text-slate-600 focus:ring focus:border-blue-300"
                             />
                         </div>
                         <div className="flex justify-end">

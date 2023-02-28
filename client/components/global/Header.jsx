@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from '../User/styles.module.css'
 import dark from '../User/assets/dark.jpg'
@@ -60,17 +59,17 @@ const Header = () => {
     return (
         <header className="flex justify-between items-center py-4 px-6">
             <div className="flex items-center">
-                <Link to="/">
+                <a href="/">
                     <img alt="Logo" className="h-8 mr-4" src="" width="100px" />
-                </Link>
+                </a>
                 <div className="flex items-center">
-                    <Link to="/calendar" className="ml-4 hover:text-gray-900">
+                    <a href="/calendar" className="ml-4 hover:text-gray-900">
                         <h2 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold ">Planner App</h2>
-                    </Link>
+                    </a>
                     {isAdmin === "true" ? (
-                        <Link to="/admin" className="ml-4 hover:text-gray-900">
+                        <a href="/admin" className="ml-4 hover:text-gray-900">
                             <h2 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">Admin</h2>
-                        </Link>
+                        </a>
                     ) : (
                         <p className="hidden"></p>
                     )}
@@ -86,19 +85,19 @@ const Header = () => {
                     </button>
                 )}
                 {isLoggedIn && (
-                    <Link to="/userpanel">
+                    <a href="/userpanel">
                         <h4 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">UserPanel</h4>
-                    </Link>
+                    </a>
                 )}
                 {!isLoggedIn && (
-                    <Link to="/login" className="ml-4 hover:text-gray-900">
+                    <a href="/login" className="ml-4 hover:text-gray-900">
                         <h2 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">Login</h2>
-                    </Link>
+                    </a>
                 )}
                 {!isLoggedIn && (
-                    <Link to="/register" className="ml-4 hover:text-gray-900">
+                    <a href="/register" className="ml-4 hover:text-gray-900">
                         <h2 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">Cadastre-se</h2>
-                    </Link>
+                    </a>
                 )}
                 <div className={styles.theme_selector}>
                     <input

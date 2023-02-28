@@ -1,18 +1,21 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
 
-const AdminSchema = new Schema({
+const AdminSchema = new mongoose.Schema({
+    IDAdmin: {
+        type: String,
+        required: false,
+    },
     title: {
         type: String,
-        required: true
+        required: true,
     },
     description: {
         type: String,
-        required: true
+        required: true,
     },
     image: {
         type: String,
-        required: true
+        required: true,
     },
     createdAt: {
         type: Date,
@@ -21,6 +24,4 @@ const AdminSchema = new Schema({
     }
 });
 
-const Admin = mongoose.model('Admin', AdminSchema);
-
-module.exports = Admin;
+module.exports = mongoose.model('admins', AdminSchema);

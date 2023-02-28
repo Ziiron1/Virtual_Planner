@@ -120,7 +120,7 @@ body[data-theme="dark"] {
 }
 
 .input {
-    color: var(--dark);
+    color: #343339;
     margin: 10px 0;
     border: none;
     padding: 12px;
