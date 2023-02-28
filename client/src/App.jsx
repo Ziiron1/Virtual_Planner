@@ -46,7 +46,7 @@ function App() {
     if (isAdmin === "true") {
       return <Admin {...props} />;
     } else {
-      return <Navigate to="/login" />;
+      return <NotFound />;
     }
   }
 

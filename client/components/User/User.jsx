@@ -12,7 +12,7 @@ function WelcomeMessage() {
     }, []);
 
     return (
-        <div className="bg-gray-200 p-4 rounded-md w-80">
+        <div className="p-4 rounded-md w-80">
             {username && (
                 <p className="font-bold text-lg border-b border-gray-300 pb-2">
                     Bem-vindo ao seu planner, {username}!

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-// import { Grid, Paper, Typography } from '@mui/material';
-// import { makeStyles } from "@material-ui/core/styles";
 import Cookie from 'js-cookie';
 import Planner from '../Planner/PlannerDetailonPanel'
-import api from '../../config/axiosInstance'
-// import IconButton from '@material-ui/core/IconButton';
-// import EditIcon from '@mui/icons-material/Edit';
+import api from '../../config/axiosInstance';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaExclamationCircle } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 
 /*  /planner/user/:id */
 function UserEditPage() {
@@ -84,9 +84,56 @@ function UserEditPage() {
         })
             .then((response) => {
                 console.log(response);
+                toast.success('Perfil Atualizado com sucesso!', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    style: {
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        backgroundColor: '#0BB36A',
+                        color: '#FFF',
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
+                        padding: '16px',
+                        border: "none",
+
+                    },
+                    toastClassName: 'custom-toast',
+                    bodyClassName: 'custom-toast-body',
+                    progressClassName: 'custom-toast-progress',
+                    closeButton: false,
+                    icon: <FaCheck />,
+                })
             })
             .catch((error) => {
                 console.log(error);
+                toast.error('Ocorreu um erro ao atualizar!', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    style: {
+                        backgroundColor: '#FFCDD2',
+                        color: '#B71C1C',
+                        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
+                    },
+                    toastClassName: 'custom-toast',
+                    bodyClassName: 'custom-toast-body',
+                    progressClassName: 'custom-toast-progress',
+                    closeButton: false,
+                    icon: <FaExclamationCircle />,
+                });
             });
     };
 
@@ -108,36 +155,36 @@ function UserEditPage() {
 
                         <div className="flex flex-col p-4 w-full">
                             <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 py-4">Nome</label>
-                                <input type="text" name="name" id="name" defaultValue={name} disabled={!editMode} onChange={(e) => setName(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="name" className="block text-sm font-medium py-4">Nome</label>
+                                <input type="text" name="name" id="name" defaultValue={name} disabled={!editMode} onChange={(e) => setName(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 py-4">E-mail</label>
-                                <input type="email" name="email" id="email" defaultValue={email} disabled={!editMode} onChange={(e) => setEmail(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="email" className="block text-sm font-medium py-4">E-mail</label>
+                                <input type="email" name="email" id="email" defaultValue={email} disabled={!editMode} onChange={(e) => setEmail(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 py-4">Senha</label>
-                                <input type="password" name="password" id="password" value={password} disabled={!editMode} onChange={(e) => setPassword(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="password" className="block text-sm font-medium py-4">Senha</label>
+                                <input type="password" name="password" id="password" value={password} disabled={!editMode} onChange={(e) => setPassword(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <div>
-                                <label htmlFor="rua" className="block text-sm font-medium text-gray-700 py-4">Rua</label>
-                                <input type="text" name="rua" id="rua" value={rua} disabled={!editMode} onChange={(e) => setRua(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="rua" className="block text-sm font-medium py-4">Rua</label>
+                                <input type="text" name="rua" id="rua" value={rua} disabled={!editMode} onChange={(e) => setRua(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <div>
-                                <label htmlFor="bairro" className="block text-sm font-medium text-gray-700 py-4">Bairro</label>
-                                <input type="text" name="bairro" id="bairro" value={bairro} disabled={!editMode} onChange={(e) => setBairro(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="bairro" className="block text-sm font-medium py-4">Bairro</label>
+                                <input type="text" name="bairro" id="bairro" value={bairro} disabled={!editMode} onChange={(e) => setBairro(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <div>
-                                <label htmlFor="cidade" className="block text-sm font-medium text-gray-700 py-4">Cidade</label>
-                                <input type="text" name="cidade" id="cidade" value={cidade} disabled={!editMode} onChange={(e) => setCidade(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="cidade" className="block text-sm font-medium py-4">Cidade</label>
+                                <input type="text" name="cidade" id="cidade" value={cidade} disabled={!editMode} onChange={(e) => setCidade(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <div>
-                                <label htmlFor="pais" className="block text-sm font-medium text-gray-700 py-4">Pais</label>
-                                <input type="text" name="pais" id="pais" value={pais} disabled={!editMode} onChange={(e) => setPais(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="pais" className="block text-sm font-medium py-4">Pais</label>
+                                <input type="text" name="pais" id="pais" value={pais} disabled={!editMode} onChange={(e) => setPais(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <div>
-                                <label htmlFor="cep" className="block text-sm font-medium text-gray-700 py-4">Cep</label>
-                                <input type="text" name="cep" id="cep" value={cep} disabled={!editMode} onChange={(e) => setCep(e.target.value)} className="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable" />
+                                <label htmlFor="cep" className="block text-sm font-medium py-4">Cep</label>
+                                <input type="text" name="cep" id="cep" value={cep} disabled={!editMode} onChange={(e) => setCep(e.target.value)} className={`p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-neutral-400 editable ${editMode ? 'bg-opacity-30' : 'bg-neutral-100'}`} />
                             </div>
                             <button
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
@@ -154,9 +201,9 @@ function UserEditPage() {
                     <h4 className="text-lg font-bold">
                         Meus Planners
                     </h4>
-                    {user && user.map((planner) => (
-                        <Planner key={planner.id} planner={planner} />
-                    ))}
+                    {user && (
+                        <Planner />
+                    )}
                 </div>
             </div>
         </div >

@@ -1,139 +1,165 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import styles from "./styles.module.css";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
-import { Alert, AlertTitle } from '@mui/material';
-import { TextField, Button } from "@mui/material";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaExclamationCircle } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 
-function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [alert, setAlert] = useState(null);
-  const [error, setError] = useState(false);
+function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      try {
-        jwt_decode(token);
-        setIsAuthenticated(true);
-      } catch (error) {
-        console.error("Token inválido:", error.message);
-      }
+    useEffect(() => {
+        const token = Cookies.get("token");
+        if (token) {
+            try {
+                jwt_decode(token);
+                setIsAuthenticated(true);
+            } catch (error) {
+                console.error("Token inválido:", error.message);
+            }
+        }
+    }, []);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            const response = await axios.post("https://plannervirtual.onrender.com/login", {
+                email: email,
+                password: password,
+            });
+
+            const id_user = response.data.id;
+            const token = response.data.token;
+            const name = response.data.name;
+            const isAdmin = response.data.isAdmin;
+
+            Cookies.set("token", token);
+            Cookies.set("id_user", id_user);
+            Cookies.set("Username", name);
+            Cookies.set("is_Admin", isAdmin);
+            setIsAuthenticated(true);
+            toast.success('Login efetuado com sucesso!', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                style: {
+                    fontFamily: 'Roboto',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    backgroundColor: '#0BB36A',
+                    color: '#FFF',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
+                    padding: '16px',
+                    border: "none",
+
+                },
+                toastClassName: 'custom-toast',
+                bodyClassName: 'custom-toast-body',
+                progressClassName: 'custom-toast-progress',
+                closeButton: false,
+                icon: <FaCheck />,
+            })
+
+
+
+        } catch (error) {
+            console.error(error);
+            toast.error('Ocorreu um erro ao fazer login', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                style: {
+                    backgroundColor: '#FFCDD2',
+                    color: '#B71C1C',
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
+                    fontFamily: 'Roboto',
+                    fontSize: '16px',
+                },
+                toastClassName: 'custom-toast',
+                bodyClassName: 'custom-toast-body',
+                progressClassName: 'custom-toast-progress',
+                closeButton: false,
+                icon: <FaExclamationCircle />,
+            });
+
+        }
+    };
+
+    if (isAuthenticated === true) {
+
+        setTimeout(() => {
+            window.location.assign('/calendar')
+        }, 2000);
+
     }
-  }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+    return (
+        <div className={styles.login_container}>
+            <div className={styles.main}>
+                <div id="illustration" className={styles.illustration}></div>
+                <div className={styles.form_container}>
 
-    try {
-      const response = await axios.post("https://plannervirtual.onrender.com/login", {
-        email: email,
-        password: password,
-      });
+                    <div className={styles.form_header}>
+                        <h3 className={styles.h3}>Entre nessa aventura</h3>
+                        <p className={styles.p}>
+                            Não tem uma conta? <a href="/register" className="border-b-2 border-transparent hover:border-gray-900 font-bold">Cadastre-se</a>
+                        </p>
+                    </div>
+                    <form id="login-form" onSubmit={handleSubmit} className={styles.form}>
+                        <label htmlFor="email-input">Email</label>
+                        <input
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            id="email-input"
+                            type="email"
+                            className={styles.input}
+                            placeholder="Email"
+                        />
 
-      const id_user = response.data.id;
-      const token = response.data.token;
-      const name = response.data.name;
-      const isAdmin = response.data.isAdmin;
-
-      Cookies.set("token", token);
-      Cookies.set("id_user", id_user);
-      Cookies.set("Username", name);
-      Cookies.set("is_Admin", isAdmin);
-      setIsAuthenticated(true);
-
-      setAlert({
-        title: "Successo",
-        message: "Login realizado com sucesso",
-        severity: "success",
-      });
-
-    } catch (error) {
-      console.error(error);
-
-      setAlert({
-        title: "Error",
-        message: "Email ou senha inválido",
-        severity: "error",
-      });
-      setError(true);
-      setEmail("");
-      setPassword("");
-
-      setTimeout(() => {
-        setError(false);
-      }, 3000);
-    }
-  };
-
-  if (isAuthenticated === true) {
-
-    setTimeout(() => {
-      window.location.assign('/calendar')
-    }, 1500);
-
-  }
-
-  return (
-    <div>
-      <h1 className="text-center text-3xl font-bold">Login</h1>
-      <div className="flex flex-col items-center max-w-400px mx-auto p-5 ">
-        <form onSubmit={handleSubmit} className="flex flex-col items-center w-full px-0 pb-7 pt-5 border-2 border-red-400 max-w-sm">
-          {alert && (
-            <Alert onClose={() => setAlert(null)} severity={alert.severity}>
-              <AlertTitle>{alert.title}</AlertTitle> {alert.message}
-            </Alert>
-          )}
-          <TextField
-            id="email"
-            label="Email"
-            type="email"
-            variant="standard"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            margin="normal"
-            className={` mb-20 ${error ? 'border-red-500' : ''}`}
-            error={error} // Define a existência de erro
-            helperText={error/*  && 'Email ou senha incorretos' */} // Define a mensagem de erro
-            InputProps={{ style: { borderBottomColor: error ? 'red' : 'initial' } }} // Define a cor da borda de acordo com o erro
-          />
-          <div>
-            <TextField
-              id="password"
-              label="Senha"
-              type="password"
-              variant="standard"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              margin="normal"
-              className={` mb-20 ${error ? 'border-red-500' : ''}`}
-              error={error} // Define a existência de erro
-              helperText={error/*  && 'Email ou senha incorretos' */} // Define a mensagem de erro
-              InputProps={{ style: { borderBottomColor: error ? 'red' : 'initial' } }} // Define a cor da borda de acordo com o erro
-            />
-          </div>
-          <Button variant="contained" color="primary" type="submit">
-            Entrar
-          </Button>
-          <br />
-          <small style={{ marginTop: '4px', marginBottom: '4px' }}>Não tem uma conta? Faça o cadastro</small>
-          <br />
-          <br />
-          <Button
-            variant="outlined"
-            color="primary"
-            type="submit"
-            style={{ background: 'transparent' }}
-          >
-            <a href="/register" style={{ textDecoration: 'none', color: 'inherit' }}>Cadastre-se</a>
-          </Button>
-
-        </form>
-      </div>
-    </div>
-  );
+                        <label htmlFor="password-input">Senha</label>
+                        <input
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                            id="password-input"
+                            type="password"
+                            className={styles.input}
+                            placeholder="Senha"
+                        />
+                        <button type="submit" form="login-form" value="Submit" className={styles.btn}>
+                            Entrar
+                        </button>
+                    </form>
+                    <div className={styles.form_buttons}>
+                        <button className="border border-solid border-gray-400 hover:border-gray-700 bg-transparent bg-opacity-100 hover:bg-violet-400 rounded px-3 py-2">
+                            <i className="fa-brands fa-google mr-1"></i>
+                            <span>Entrar com Google</span>
+                        </button>
+                        <button className="border border-solid border-gray-400 hover:border-gray-700 bg-transparent bg-opacity-100 hover:bg-violet-400 rounded px-3 py-2">
+                            <i className="fa-brands fa-facebook"></i>
+                        </button>
+                        <button className="border border-solid border-gray-400 hover:border-gray-700 bg-transparent bg-opacity-100 hover:bg-violet-400 rounded px-3 py-2">
+                            <i className="fa-brands fa-apple"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default LoginPage;
+export default Login;
