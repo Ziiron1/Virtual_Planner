@@ -83,7 +83,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/register" element={<RegisterRoute />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }

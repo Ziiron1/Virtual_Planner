@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "../../src/index.css";
 import api from "../../config/axiosInstance";
+import AboutLeft from '../../assets/images/about-left-image.png'
+import bannerright from '../../assets/images/banner-right-image.png'
+import contacticon01 from '../../assets/images/contact-icon-01.png'
+import contacticon02 from '../../assets/images/contact-icon-02.png'
+import contacticon03 from '../../assets/images/contact-icon-03.png'
+import portfolio01 from '../../assets/images/portfolio-01.jpg'
+import portfolio02 from '../../assets/images/portfolio-02.jpg'
+import portfolio03 from '../../assets/images/portfolio-03.jpg'
+import portfolio04 from '../../assets/images/portfolio-04.jpg'
+import portfolio05 from '../../assets/images/portfolio-05.jpg'
+import portfolio06 from '../../assets/images/portfolio-06.jpg'
 
 const Main = () => {
   const [data, setData] = useState({});
@@ -74,7 +85,7 @@ const Main = () => {
                     data-wow-delay="0.5s"
                   >
                     <img
-                      src="../../assets/images/banner-right-image.png"
+                      src={bannerright}
                       alt=""
                     />
                   </div>
@@ -277,7 +288,7 @@ const Main = () => {
                 data-wow-duration="1s"
                 data-wow-delay="0.5s"
               >
-                <img src="../../assets/images/about-left-image.png" alt="" />
+                <img src={AboutLeft} alt="" />
               </div>
             </div>
             <div
@@ -355,164 +366,117 @@ const Main = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-4">
-              <div
-                className="service-item wow bounceInUp"
-                data-wow-duration="1s"
-                data-wow-delay="0.3s"
-              >
-                <div className="row">
-                  <div className="col-lg-4">
-                    <div className="icon">
-                      <img
-                        src="../../assets/images/service-icon-01.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
+              <div className="service-item wow bounceInUp">
+                <div className="">
+                  <div className="">
                     <div className="right-content">
-                      {data && data.length > 0 && <h4>{data[0].title}</h4>}
-                      <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium dormque laudantium.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="service-item wow bounceInUp"
-                data-wow-duration="1s"
-                data-wow-delay="0.4s"
-              >
-                <div className="row">
-                  <div className="col-lg-4">
-                    <div className="icon">
-                      <img
-                        src="../../assets/images/service-icon-02.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
-                    <div className="right-content">
-                      {data && data.length > 0 && <h4>{data[1].title}</h4>}
-                      <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium dormque laudantium.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="service-item wow bounceInUp"
-                data-wow-duration="1s"
-                data-wow-delay="0.5s"
-              >
-                <div className="row">
-                  <div className="col-lg-4">
-                    <div className="icon">
-                      <img
-                        src="../../assets/images/service-icon-03.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
-                    <div className="right-content">
-                      {data && data.length > 0 && <h4>{data[2].title}</h4>}
-                      <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium dormque laudantium.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="service-item wow bounceInUp"
-                data-wow-duration="1s"
-                data-wow-delay="0.6s"
-              >
-                <div className="row">
-                  <div className="col-lg-4">
-                    <div className="icon">
-                      <img
-                        src="../../assets/images/service-icon-03.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
-                    <div className="right-content">
-                      {data && data.length > 0 && <h4>{data[3].title}</h4>}
+                      {data[2] && data.length > 0 && <img className="w-200 h-100 rounded-full" src={data[2].image} />}
 
-                      <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium dormque laudantium.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="service-item wow bounceInUp"
-                data-wow-duration="1s"
-                data-wow-delay="0.7s"
-              >
-                <div className="row">
-                  <div className="col-lg-4">
-                    <div className="icon">
-                      <img
-                        src="../../assets/images/service-icon-01.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
-                    <div className="right-content">
-                      {data && data.length > 0 && <h4>{data[4].title}</h4>}
+                      {data[2] && data.length > 0 && <h4 className="font-bold text-gray-900 pt-4 text-center">{data[2].title}</h4>}
 
-                      <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium dormque laudantium.
-                      </p>
+                      {data[2] && data.length > 0 &&
+                        <p className="font-medium">
+                          {data[2].description}
+                        </p>
+                      }
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
-              <div
-                className="service-item wow bounceInUp"
-                data-wow-duration="1s"
-                data-wow-delay="0.8s"
-              >
-                <div className="row">
-                  <div className="col-lg-4">
-                    <div className="icon">
-                      <img
-                        src="../../assets/images/service-icon-02.png"
-                        alt=""
-                      />
+              <div className="service-item wow bounceInUp">
+                <div className="">
+                  <div className="">
+                    <div className="right-content">
+                      {data[1] && data.length > 0 && <img className="w-200 h-100 rounded-full" src={data[1].image} />}
+
+                      {data[1] && data.length > 0 && <h4 className="font-bold text-gray-900 pt-4 text-center">{data[1].title}</h4>}
+
+                      {data[1] && data.length > 0 &&
+                        <p className="font-medium">
+                          {data[1].description}
+                        </p>
+                      }
                     </div>
                   </div>
-                  <div className="col-lg-8">
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="service-item wow bounceInUp">
+                <div className="">
+                  <div className="">
                     <div className="right-content">
-                      {data && data.length > 0 && <h4>{data[5].title}</h4>}
-                      <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium dormque laudantium.
-                      </p>
+                      {data[0] && data.length > 0 && <img className="w-200 h-100 rounded-full" src={data[0].image} />}
+
+                      {data[0] && data.length > 0 && <h4 className="font-bold text-gray-900 pt-4 text-center">{data[0].title}</h4>}
+
+                      {data[0] && data.length > 0 &&
+                        <p className="font-medium">
+                          {data[0].description}
+                        </p>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="service-item wow bounceInUp">
+                <div className="">
+                  <div className="">
+                    <div className="right-content">
+                      {data[3] && data.length > 0 && <img className="w-200 h-100 rounded-full" src={data[3].image} />}
+
+                      {data[3] && data.length > 0 && <h4 className="font-bold text-gray-900 pt-4 text-center">{data[3].title}</h4>}
+
+                      {data[3] && data.length > 0 &&
+                        <p className="font-medium">
+                          {data[3].description}
+                        </p>
+                      }
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="service-item wow bounceInUp">
+                <div className="">
+                  <div className="">
+                    <div className="right-content">
+
+                      {data[4] && data.length > 0 && <img className="w-200 h-100 rounded-full" src={data[4].image} />}
+
+                      {data[4] && data.length > 0 && <h4 className="font-bold text-gray-900 pt-4 text-center">{data[4].title}</h4>}
+
+                      {data[4] && data.length > 0 &&
+                        <p className="font-medium">
+                          {data[4].description}
+                        </p>
+                      }
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="service-item wow bounceInUp">
+                <div className="">
+                  <div className="">
+                    <div className="right-content">
+                      {data[5] && data.length > 0 && <img className="w-200 h-100 rounded-full" src={data[5].image} />}
+
+                      {data[5] && data.length > 0 && <h4 className="font-bold text-gray-900 pt-4 text-center">{data[5].title}</h4>}
+
+                      {data[5] && data.length > 0 &&
+                        <p className="font-medium">
+                          {data[5].description}
+                        </p>
+                      }
                     </div>
                   </div>
                 </div>
@@ -531,8 +495,8 @@ const Main = () => {
                 data-wow-duration="1s"
                 data-wow-delay="0.3s"
               >
-                <h6>Nossos Temas</h6>
-                <h2>
+                <h6 className="text-center">Nossos Temas</h6>
+                <h2 className="text-center">
                   Temos mais de <em>50</em> temas disponíveis ou{" "}
                   <span>crie</span> o seu
                 </h2>
@@ -551,7 +515,7 @@ const Main = () => {
                 <div className="item">
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-01.jpg" alt="" />
+                      <img src={portfolio01} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -564,7 +528,7 @@ const Main = () => {
                   </div>
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-04.jpg" alt="" />
+                      <img src={portfolio04} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -579,7 +543,7 @@ const Main = () => {
                 <div className="item">
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-02.jpg" alt="" />
+                      <img src={portfolio02} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -592,7 +556,7 @@ const Main = () => {
                   </div>
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-05.jpg" alt="" />
+                      <img src={portfolio05} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -607,7 +571,7 @@ const Main = () => {
                 <div className="item">
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-03.jpg" alt="" />
+                      <img src={portfolio03} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -620,7 +584,7 @@ const Main = () => {
                   </div>
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-06.jpg" alt="" />
+                      <img src={portfolio06} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -635,7 +599,7 @@ const Main = () => {
                 <div className="item">
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-04.jpg" alt="" />
+                      <img src={portfolio04} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -648,7 +612,7 @@ const Main = () => {
                   </div>
                   <div className="portfolio-item">
                     <div className="thumb">
-                      <img src="../../assets/images/portfolio-01.jpg" alt="" />
+                      <img src={portfolio01} alt="" />
                       <div className="hover-content">
                         <div className="inner-content">
                           <a href="#">
@@ -763,27 +727,28 @@ const Main = () => {
                     <div className="contact-info">
                       <ul>
                         <li>
-                          <div className="icon">
+                          <div className="icon flex justify-center items-center">
                             <img
-                              src="../../assets/images/contact-icon-01.png"
+                              className="self-center"
+                              src={contacticon01}
                               alt="email icon"
                             />
                           </div>
                           <a href="#">contato@devplanner.com</a>
                         </li>
                         <li>
-                          <div className="icon">
+                        <div className="icon flex justify-center items-center">
                             <img
-                              src="../../assets/images/contact-icon-02.png"
+                              src={contacticon02}
                               alt="phone"
                             />
                           </div>
                           <a href="#">(21) 98569-3025</a>
                         </li>
                         <li>
-                          <div className="icon">
+                        <div className="icon flex justify-center items-center">
                             <img
-                              src="../../assets/images/contact-icon-03.png"
+                              src={contacticon03}
                               alt="location"
                             />
                           </div>

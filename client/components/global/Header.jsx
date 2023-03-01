@@ -21,9 +21,8 @@ const Header = () => {
   useEffect(() => {
     try {
       const illustration = document.getElementById("illustration");
-      illustration.style.backgroundImage = `url(${
-        theme === "dark" ? dark : light
-      })`;
+      illustration.style.backgroundImage = `url(${theme === "dark" ? dark : light
+        })`;
       document.documentElement.setAttribute("data-theme", theme);
       window.localStorage.setItem("theme", theme);
     } catch (error) {
@@ -83,17 +82,24 @@ const Header = () => {
         </div>
       </div>
       <div className="flex items-center">
-        <a href="/" class="hover:text-gray-300 mr-2">
-          HOME
+
+        <a href="/" className="ml-4 hover:text-gray-900">
+          <h2 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">
+            Home
+          </h2>
+        </a>
+        <a href="#" className="ml-4 hover:text-gray-900">
+          <h2 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">
+            Sobre
+          </h2>
+        </a>
+        <a href="#" className="ml-4 hover:text-gray-900">
+          <h2 className="mr-4 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-900 font-bold transition duration-300 ease-in-out">
+            Contato
+          </h2>
         </a>
 
-        <a href="#" class="hover:text-gray-300 mr-2">
-          Sobre
-        </a>
-
-        <a href="#" class="hover:text-gray-300 mr-2">
-          Contato
-        </a>
+        <div className="border-l-4 border-red-700 mr-2 max-w-full">|</div>
 
         {isLoggedIn && (
           <button
