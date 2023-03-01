@@ -1,23 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-    --primary-text: #2a225a;
+    --primary-text: #403775;
     --text: #7f73a1;
     --form-bg: #fafbff;
     --bg: #eaeefd;
 }
 
 [data-theme="light"] {
-    --primary-text: #fbf9ff;
+    --primary-text: #ebe9e9;
     --text: #b8bcd2;
     --form-bg: #210856;
     --bg: #493c65;
 }
 
 * {
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
     transition-property: background color;
     transition-duration: 600ms;
 }
@@ -31,5 +34,21 @@ body {
 }
 
 * {
+    color: var(--primary-text);
+}
+
+p {
+    color: var(--text);
+}
+
+h4 {
+    color: var(--primary-text);
+}
+
+a {
+    color: var(--primary-text);
+}
+
+h6 {
     color: var(--primary-text);
 }

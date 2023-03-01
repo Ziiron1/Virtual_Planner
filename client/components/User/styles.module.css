@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
+
 :root {
     --primary-text: #2a225a;
     --text: #7f73a1;
@@ -8,8 +9,15 @@
     --input-bg: #eae3fd;
 }
 
+:root {
+    --primary-text: #403775;
+    --text: #7f73a1;
+    --form-bg: #fafbff;
+    --bg: #eaeefd;
+}
+
 [data-theme="light"] {
-    --primary-text: #fbf9ff;
+    --primary-text: #ebe9e9;
     --text: #b8bcd2;
     --form-bg: #210856;
     --bg: #493c65;
@@ -43,6 +51,8 @@ body[data-theme="dark"] {
     margin: 0 200px 0 200px;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 8px 0px;
     border-radius: 20px;
+    margin-top: 100px;
+
 }
 
 .illustration {
@@ -195,4 +205,8 @@ body[data-theme="dark"] {
 
 .label:active:after {
     width: 20px;
+}
+
+h4 {
+    color: var(--primary-text);
 }

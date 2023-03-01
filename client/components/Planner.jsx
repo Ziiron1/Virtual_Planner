@@ -7,7 +7,6 @@ import api from "../config/axiosInstance";
 import Cookies from "js-cookie";
 import Modal from 'react-modal';
 import WelcomeUser from './User/User';
-// import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Datepicker from 'flowbite-datepicker/Datepicker';
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
