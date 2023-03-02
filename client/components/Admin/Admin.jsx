@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../config/axiosInstance';
 import Modal from 'react-modal';
 import '../styles/admin.css'
@@ -15,7 +15,7 @@ function TableItem({ IDAdmin, title, image, description, createdAt, onDelete, on
         <tr key={IDAdmin}>
             <td className="border px-4 py-2">{IDAdmin}</td>
             <td className="border px-4 py-2">{title}</td>
-            <td className="border px-4 py-2">{image}</td>
+            <td className="border px-4 py-2 max-w-0 truncate">{image}</td>
             <td className="border px-4 py-2">{description}</td>
             <td className="border px-4 py-2">{createdAt}</td>
             <td className="border px-2 py-2">
@@ -71,7 +71,7 @@ function Table({ items, handleDelete, handleUpdate }) {
                         key={item.IDAdmin}
                         {...item}
                         onDelete={() => handleDelete(item.IDAdmin)}
-                        onUpdate={() => handleUpdate(item)} />
+                        onUpdate={() => handleUpdate(item.IDAdmin)} />
                 ))}
             </tbody>
         </table>
@@ -82,6 +82,10 @@ function Admin() {
     const [items, setItems] = useState([]);
     const [newItem, setNewItem] = useState({ title: '', description: '', image: '' });
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [title, setTitle] = useState('');
+    const [image, setImage] = useState('');
+    const [description, setDescription] = useState('');
+    const [showInputs, setShowInputs] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -91,6 +95,26 @@ function Admin() {
         }
         fetchData();
     }, []);
+
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+    };
+
+    const handleImageChange = (event) => {
+        setImage(event.target.value);
+    };
+
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    };
+
+    const handleShowInputsClick = () => {
+        setShowInputs(true);
+    };
+
+    const handleHideInputsClick = () => {
+        setShowInputs(false);
+    };
 
     const handleNewInputChange = (e) => {
         const { name, value } = e.target;
@@ -102,9 +126,19 @@ function Admin() {
         setItems((prevItems) => prevItems.filter((item) => item.id !== id));
     };
 
-    const handleUpdate = async (item) => {
-        await api.patch(`/admin/${item.IDAdmin}`, item);
-        setItems((prevItems) => prevItems.map((prevItem) => prevItem.IDAdmin === item.IDAdmin ? item : prevItem));
+    const handleUpdate = (id) => {
+        api.patch(`/admin/${id}`, {
+            title,
+            image,
+            description
+        })
+            .then(response => {
+                console.log(response.data);
+                
+            })
+            .catch(error => {
+                console.log(error);
+            })
     };
 
     const handleCreate = async () => {
@@ -124,6 +158,51 @@ function Admin() {
                     onClick={() => setModalIsOpen(true)}>
                     +
                 </button>
+                <div className="max-w-lg mx-auto mt-4">
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+                        onClick={showInputs ? handleHideInputsClick : handleShowInputsClick}
+                    >
+                        {showInputs ? 'Esconder' : 'Alterar'}
+                    </button>
+
+                    <div
+                        className={`mt-4 transition-opacity duration-300 ${showInputs ? 'opacity-100' : 'opacity-0'}`}
+                        style={{ display: showInputs ? 'block' : 'none' }}
+                    >
+                        <label className="block text-gray-700 font-bold mb-2" htmlFor="title-input">
+                            Título
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="title-input"
+                            type="text"
+                            value={title}
+                            onChange={handleTitleChange}
+                        />
+
+                        <label className="block text-gray-700 font-bold mt-4 mb-2" htmlFor="image-input">
+                            Imagem
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="image-input"
+                            type="text"
+                            value={image}
+                            onChange={handleImageChange}
+                        />
+
+                        <label className="block text-gray-700 font-bold mt-4 mb-2" htmlFor="description-input">
+                            Descrição
+                        </label>
+                        <textarea
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="description-input"
+                            value={description}
+                            onChange={handleDescriptionChange}
+                        ></textarea>
+                    </div>
+                </div>
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={() => setModalIsOpen(false)}
