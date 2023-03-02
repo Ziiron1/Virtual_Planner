@@ -51,8 +51,8 @@ const Main = () => {
                     <div className="row">
                       <div className="col-lg-4 col-sm-4">
                         <div className="info-stat">
-                          <h6>Status:</h6>
-                          <h4>Pronto</h4>
+                          <h6>Público:</h6>
+                          <h4>Desenvolvedores web</h4>
                         </div>
                       </div>
                       <div className="col-lg-4 col-sm-4">
@@ -72,7 +72,7 @@ const Main = () => {
                       </div>
                       <div className="col-lg-12">
                         <div className="main-green-button scroll-to-section">
-                          <a href="#contact">Cadastre-se</a>
+                          <a href="#contact">Acesse gratuitamente agora!</a>
                         </div>
                       </div>
                     </div>
@@ -115,8 +115,7 @@ const Main = () => {
                       <h4>Planeje-se</h4>
                       <div className="line-dec"></div>
                       <p>
-                        Marque no calendário todos os seus compromissos do mês.
-                        Tenha sempre em mão a data dos seus compromissos
+                      Garanta que suas tarefas mais críticas sejam concluídas primeiro, evitando atrasos e problemas.
                       </p>
                     </div>
                   </div>
@@ -130,11 +129,10 @@ const Main = () => {
                         <h6>02</h6>
                       </div>
                       <div className="icon"></div>
-                      <h4>Produtividade e disciplina</h4>
+                      <h4>Anote suas tarefas</h4>
                       <div className="line-dec"></div>
                       <p>
-                        Lorem ipsum dolor sit ameter consectetur adipiscing li
-                        elit sed do eiusmod.
+                      Priorize suas tarefas e projetos de acordo com sua importância e urgência. Além de permitir explorar a criatividade e customizar como quiser.
                       </p>
                     </div>
                   </div>
@@ -148,11 +146,10 @@ const Main = () => {
                         <h6>03</h6>
                       </div>
                       <div className="icon"></div>
-                      <h4>Anote suas tarefas</h4>
+                      <h4>Produtividade e disciplina</h4>
                       <div className="line-dec"></div>
                       <p>
-                        Lorem ipsum dolor sit ameter consectetur adipiscing li
-                        elit sed do eiusmod.
+                      Uma visão clara e organizada de seu trabalho pode garantir uma sensação de tranquilidade e confiança em relação ao seu progresso.
                       </p>
                     </div>
                   </div>
@@ -170,7 +167,7 @@ const Main = () => {
                       <div className="line-dec"></div>
                       <p>
                         Veja os resultados em pouco tempo, tendo uma visão
-                        mensal de todas as suas tarefas e entregas
+                        imediata de todas as suas tarefas. 
                       </p>
                     </div>
                   </div>
@@ -197,7 +194,7 @@ const Main = () => {
                           <div>
                             80%
                             <br />
-                            <span>Organização</span>
+                            <span>Foco</span>
                           </div>
                         </div>
                       </div>
@@ -220,7 +217,7 @@ const Main = () => {
                           <div>
                             60%
                             <br />
-                            <span>Rotina</span>
+                            <span>Acompanhamento</span>
                           </div>
                         </div>
                       </div>
@@ -243,7 +240,7 @@ const Main = () => {
                           <div>
                             90%
                             <br />
-                            <span>Tarefas</span>
+                            <span>Planejamento</span>
                           </div>
                         </div>
                       </div>
@@ -266,7 +263,7 @@ const Main = () => {
                           <div>
                             70%
                             <br />
-                            <span>Temas</span>
+                            <span>Disciplina</span>
                           </div>
                         </div>
                       </div>
@@ -329,16 +326,14 @@ const Main = () => {
                 </a>{" "}
                 nasceu para facilitar a sua vida. Houve uma vez uma pequena
                 empresa de desenvolvimento de software que percebeu que muitos
-                desenvolvedores precisavam de um calendário especializado para
-                acompanhar seus projetos. Eles decidiram criar um calendário
-                on-line que pudesse ser personalizado de acordo com as
-                necessidades de cada usuário. O calendário se tornou um grande
-                sucesso entre a comunidade de desenvolvedores, e a empresa
-                cresceu rapidamente. Hoje, eles são uma das principais empresas
-                de calendários para desenvolvedores do mundo.
+                desenvolvedores precisavam de um espaço especializado para
+                acompanhar seus projetos, pois um correto planejamento de website pode garantir o sucesso de toda sua estratégia.
+                É imprescindível planejar todas as etapas, desde a elaboração do briefing até a entrega, para garantir que não existam surpresas no meio do caminho que possam comprometer o prazo e/ou a qualidade final do projeto. Assim nasceu a ideia de criar um planner on-line que pudesse ser personalizado de acordo com as
+                necessidades de cada usuário, um método prático e visual de organização, que possibilita a distribuição de compromissos e tarefas de forma semanal, mensal e anual.
+                Acreditamos muito nessa dinâmica de organização, por isso, aqui no nosso App você encontra diferentes modelos para aplicar na seu projeto.
               </p>
               <div className="main-green-button">
-                <a href="/Register">Acesse gratuitamente agora!</a>
+                <a href="/Register">Cadastre-se já!</a>
               </div>
             </div>
           </div>
