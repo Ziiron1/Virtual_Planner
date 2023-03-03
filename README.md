@@ -1,3 +1,4 @@
+<p align="center"> <img src="https://github.com/Ziiron1/Virtual_Planner/blob/main/Logo-dimensao.png?raw=true"/> </p>
 # Virtual Planner Geral
 Este é o projeto em grupo que foi desenvolvido para a aprovação de competência do módulo 6- Projetos finais da plataforma Resilia em parceria com o Senac no programa Programadores Cariocas através de um site desenvolvido para a apresentação de um app.
 
