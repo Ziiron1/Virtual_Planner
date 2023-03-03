@@ -17,8 +17,8 @@ Redução de estresse: Com um planner, o programador pode evitar a sensação de
 Em resumo, um planner pode ajudar um programador a ser mais organizado, produtivo e eficiente em seu trabalho, o que pode levar a melhores resultados e redução de estresse.
 
 # Contribuidores:
-Beatriz Fidelis
-Guilherme Batista
-Karen Moraes
-Thâmara Evelyn
-Vanessa Santos
+- Beatriz Fidelis
+- Guilherme Batista
+- Karen Moraes
+- Thâmara Evelyn
+- Vanessa Santos
