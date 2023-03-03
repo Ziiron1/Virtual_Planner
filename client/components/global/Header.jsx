@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import styles from "../User/styles.module.css";
-import dark from "../User/assets/dark.jpg";
-import light from "../User/assets/light.jpg";
+import dark from "../User/assets/dark.png";
+import light from "../User/assets/light.png";
 import Logo from "../../assets/images/Logo.png";
 
 const Header = () => {

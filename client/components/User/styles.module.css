@@ -57,7 +57,7 @@ body[data-theme="dark"] {
 
 .illustration {
     flex-grow: 1;
-    background-image: url("assets/dark.jpg");
+    background-image: url("assets/dark.png");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
