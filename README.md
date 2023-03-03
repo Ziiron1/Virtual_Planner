@@ -1,6 +1,7 @@
 # Virtual Planner Geral
 Este é o projeto em grupo que foi desenvolvido para a aprovação de competência do módulo 6- Projetos finais da plataforma Resilia em parceria com o Senac no programa Programadores Cariocas através de um site desenvolvido para a apresentação de um app.
 
+# Sobre o planner:
 O tema do app é um planner para a organização de tarefas do cotidiano de um programador, pois, um planner pode trazer diversos benefícios para um programador, incluindo:
 
 Organização: Um planner pode ajudar o programador a organizar suas tarefas e projetos de forma clara e eficiente. Isso permite que ele saiba exatamente o que precisa ser feito, quando e em que ordem.
